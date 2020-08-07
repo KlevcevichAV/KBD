@@ -171,15 +171,12 @@ selct Фамилия from teacher
 
 //15. Получить информацию о предметах, которые не ведет преподаватель с личным номером 221Л.
 
-select * from subject s
-	join teacher_student_group tsg on tsg.КодовыйНомерПредмета = s.КодовыйНомерПредмета
-	where tsg.ЛичныйНомер != '221Л';
 
 select * from subject
-    where КодовыйНомерПредмета not in (
-        select КодовыйНомерПредмета from teacher_student_group
-        where ЛичныйНомер = '221Л'
-        group by КодовыйНомерПредмета
-    );
+	where КодовыйНомерПредмета not in(
+		select КодовыйНомерПредмета from teacher_student_group
+			where ЛичныйНомер = '221Л'
+			group by КодовыйНомерПредмета
+	);
 
 
