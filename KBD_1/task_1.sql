@@ -180,3 +180,41 @@ select * from subject
 	);
 
 
+//16. 
+
+select * from subject
+where КодовыйНомерПредмета not in (
+select КодовыйНомерПредмета from teacher_student_group tsg
+join student_group sg on sg.КодовыйНомерГруппы = tsg.КодовыйНомерГруппы
+where sg.НазваниеГруппы = 'М-6'
+)
+
+/17.
+select * from teacher
+    where Должность = 'Доцент'
+    and ЛичныйНомер in (
+        select ЛичныйНомер from teacher_student_group
+	    where КодовыйНомерГруппы = '3Г'
+    )
+    and ЛичныйНомер in (
+        select ЛичныйНомер from teacher_student_group
+	    where КодовыйНомерГруппы = '8Г'
+    );
+
+/18
+select КодовыйНомерПредмета, КодовыйНомерГруппы, ЛичныйНомер from teacher_student_group
+where ЛичныйНомер in(
+select ЛичныйНомер from teacher
+where Кафедра = 'ЭВМ' and Специальность like '%АСОИ%'
+)
+
+/19
+
+/20
+
+/21
+select distinct sg.Специальность from student_group sg
+    join teacher_student_group tsg on tsg.КодовыйНомерГруппы = sg.КодовыйНомерГруппы
+    join teacher t on t.ЛичныйНомер = tsg.ЛичныйНомер
+    where t.Кафедра = "АСУ"
+
