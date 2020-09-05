@@ -226,7 +226,6 @@ select КодовыйНомерПредмета from teacher_student_group tsg
 where sg.НазваниеГруппы = 'АС-8'
 
 #23. Получить номера студенческих групп, которые изучают те же предметы, что и студенческая группа АС-8.
-
 select distinct КодовыйНомерПредмета from teacher_student_group tsg
 	    join student_group sg on sg.КодовыйНомерГруппы = tsg.КодовыйНомерГруппы
 	    where sg.НазваниеГруппы = 'АС-8'
@@ -234,5 +233,24 @@ select distinct КодовыйНомерПредмета from teacher_student_gr
 #24. Получить номера студенческих групп, которые не изучают предметы, преподаваемых в студенческой группе АС-8.
 
 #25. Получить номера студенческих групп, которые не изучают предметы, преподаваемых преподавателем 430Л.
-
+select КодовыйНомерГруппы
+from teacher_student_group
+group by КодовыйНомерГруппы
+having КодовыйНомерГруппы not in (
+    select distinct КодовыйНомерГруппы
+    from teacher_student_group
+    where КодовыйНомерПредмета in (
+        select distinct КодовыйНомерПредмета
+        from teacher_student_group
+        where ЛичныйНомер = '430Л'
+    )
+)
 #26. Получить номера преподавателей, работающих с группой Э-15, но не преподающих предмет 12П.
+select ЛичныйНомер
+from teacher_student_group tsg
+         left join student_group sg on tsg.КодовыйНомерГруппы = sg.КодовыйНомерГруппы
+where sg.НазваниеГруппы = 'Э-15'
+group by ЛичныйНомер
+having ЛичныйНомер not in (
+    select distinct ЛичныйНомер from teacher_student_group where КодовыйНомерПредмета = '12П'
+);
