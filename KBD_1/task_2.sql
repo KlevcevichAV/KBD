@@ -3,50 +3,50 @@ drop table part;
 drop table project;
 drop table producer_part_project;
 
-create table producer
+create table provider
 (
-    П      text primary key,
-    ИмяП   text,
-    Статус int,
-    Город  text
+    ProviderID      text primary key,
+    ProviderName   text,
+    Status int,
+    City  text
 );
 create table part
 (
-    Д      text primary key,
-    ИмяД   text,
-    Цвет   text,
-    Размер int,
-    Город  text
+    ItemID      text primary key,
+    ItemName   text,
+    Color   text,
+    Size int,
+    City  text
 );
 create table project
 (
-    ПР    text primary key,
-    ИмяПР text,
-    Город text
+    ProjectID    text primary key,
+    ProjectName text,
+    City text
 );
-create table producer_part_project
+create table provider_part_project
 (
-    П  text,
-    Д  text,
-    ПР text,
+    ProviderID  text,
+    ItemID  text,
+    ProjectID text,
     S  int,
-    primary key (П, Д, ПР)
+    primary key (ProviderID, ItemID, ProjectID)
 );
 
-insert into producer (П, ИмяП, Статус, Город)
+insert into provider (ProviderID, ProviderName, Status, City)
 values ('П1', 'Петров', 20, 'Москва'),
        ('П2', 'Синицин', 10, 'Таллинн'),
        ('П3', 'Федоров', 30, 'Таллинн'),
        ('П4', 'Чаянов', 20, 'Минск'),
        ('П5', 'Крюков', 30, 'Киев');
-insert into part (Д, ИмяД, Цвет, Размер, Город)
+insert into part (ItemID, ItemName, Color, Size, City)
 values ('Д1', 'Болт', 'Красный', 12, 'Москва'),
        ('Д2', 'Гайка', 'Зелёная', 17, 'Минск'),
        ('Д3', 'Диск', 'Черный', 17, 'Вильнюс'),
        ('Д4', 'Диск', 'Черный', 14, 'Москва'),
        ('Д5', 'Корпус', 'Красный', 12, 'Минск'),
        ('Д6', 'Крышки', 'Красный', 19, 'Москва');
-insert into project (ПР, ИмяПР, Город)
+insert into project (ProjectID, ProjectName, City)
 values ('ПР1', 'ИПР1', 'Минск'),
        ('ПР2', 'ИПР2', 'Таллинн'),
        ('ПР3', 'ИПР3', 'Псков'),
@@ -54,7 +54,7 @@ values ('ПР1', 'ИПР1', 'Минск'),
        ('ПР5', 'ИПР5', 'Москва'),
        ('ПР6', 'ИПР6', 'Саратов'),
        ('ПР7', 'ИПР7', 'Москва');
-insert into producer_part_project (П, Д, ПР, S)
+insert into provider_part_project (ProjectID, ItemID, ProjectID, S)
 values ('П1', 'Д1', 'ПР1', 200),
        ('П1', 'Д1', 'ПР2', 700),
        ('П2', 'Д3', 'ПР1', 400),
@@ -81,10 +81,10 @@ values ('П1', 'Д1', 'ПР1', 200),
        ('П5', 'Д6', 'ПР4', 500);
 
 # 20 Получить цвета деталей, поставляемых поставщиком П1.
-select distinct Цвет
+select distinct Color
 from part p
-         join producer_part_project ppp on p.Д = ppp.Д
-where ppp.П = 'П1';
+         left join provider_part_project ppp on p.ItemID = ppp.ItemID
+where ppp.ItemID = 'П1';
 # 23 Получить номера поставщиков, поставляющих по крайней мере одну деталь, поставляемую по крайней мере одним поставщиком, который поставляет по крайней мере одну красную деталь.
 
 # 31 Получить номера поставщиков, поставляющих одну и ту же деталь для всех проектов.

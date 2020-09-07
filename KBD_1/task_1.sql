@@ -5,50 +5,49 @@ drop table teacher_student_group;
 
 create table teacher
 (
-    ЛичныйНомер VARCHAR(4) PRIMARY KEY ,
-    Фамилия VARCHAR(20),
-    Должность VARCHAR(20),
-    Кафедра VARCHAR(20),
-    Специальность VARCHAR(50),
-    ДомашнийТелеофн int
+    PersonalNumber VARCHAR(4) PRIMARY KEY ,
+    LastName VARCHAR(20),
+    Position VARCHAR(20),
+    Chair VARCHAR(20),
+    SpecialtyName VARCHAR(50),
+    HomePhone int
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 create table subject
 (
-    КодовыйНомерПредмета VARCHAR(3) PRIMARY KEY,
-    НазваниеПредмета VARCHAR(20),
-    КоличествоЧасов INT,
-    Кафедра VARCHAR(20),
-    Специальность VARCHAR(50),
-    Семестр INT
+    ItemCodeNumber VARCHAR(3) PRIMARY KEY,
+    NameSubject VARCHAR(20),
+    NumberOfHours INT,
+    Specialty VARCHAR(50),
+    Semester INT
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 create table student_group
 (
-    КодовыйНомерГруппы VARCHAR(3) PRIMARY KEY,
-    НазваниеГруппы VARCHAR(20),
-    КоличествоЧеловек INT,
-    Специальность VARCHAR(50),
-    ФамилияСтаросты text
+    StudentGroupCodeNumber VARCHAR(3) PRIMARY KEY,
+    StudentGroupName VARCHAR(20),
+    CountOfMembers INT,
+    SpecialtyName VARCHAR(50),
+    LeaderLastName text
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 create table teacher_student_group
 (
-    КодовыйНомерГруппы VARCHAR(3),
-    КодовыйНомерПредмета VARCHAR(3),
-    ЛичныйНомер VARCHAR(4),
-    НомерАудитории int,
-    primary key(КодовыйНомерГруппы, КодовыйНомерПредмета, ЛичныйНомер)
+    StudentGroupCodeNumber VARCHAR(3),
+    ItemCodeNumber VARCHAR(3),
+    PersonalNumber VARCHAR(4),
+    AudienceNumber int,
+    primary key(StudentGroupCodeNumber, ItemCodeNumber, PersonalNumber)
 )CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-insert into teacher (ЛичныйНомер, Фамилия, Должность, Кафедра, Специальность, ДомашнийТелеофн) values
+insert into teacher (PersonalNumber, LastName, Position, Chair, Specialty, HomePhone) values
 ('221Л', 'Фролов', 'Доцент', 'ЭВМ', 'АСОИ, ЭВМ', 487),
 ('222Л', 'Костин', 'Доцент', 'ЭВМ', 'ЭВМ', 543),
 ('225Л', 'Бойко', 'Профессор', 'АСУ', 'АСОИ, ЭВМ', 112),
 ('430Л', 'Глазов', 'Ассистент', 'ТФ', 'СД', 421),
 ('110Л', 'Петров', 'Ассистент', 'Экономики', 'Международная экономика', 324);
 
-insert into subject (КодовыйНомерПредмета, НазваниеПредмета, КоличествоЧасов, Специальность, Семестр) values
+insert into subject (ItemCodeNumber, NameSubject, NumberOfHours, Specialty, Semester) values
 ('12П', 'Мини ЭВМ', 36, 'ЭВМ', 1),
 ('14П', 'ПЭВМ', 72, 'ЭВМ', 2),
 ('17П', 'СУБД ПК', 48, 'АСОИ', 4),
@@ -56,7 +55,7 @@ insert into subject (КодовыйНомерПредмета, Название�
 ('34П', 'Физика', 30, 'СД', 6),
 ('22П', 'Аудит', 24, 'Бухучёта', 3);
 
-insert into student_group (КодовыйНомерГруппы, НазваниеГруппы, КоличествоЧеловек, Специальность, ФамилияСтаросты) values
+insert into student_group (StudentGroupCodeNumber, StudentGroupName, CountOfMembers, SpecialtyName, LeaderLastName) values
 ('8Г', 'Э-12', 18, 'ЭВМ', 'Иванова'),
 ('7Г', 'Э-15', 22, 'ЭВМ', 'Сеткин'),
 ('4Г', 'АС-9', 24, 'АСОИ', 'Балабанов'),
@@ -65,7 +64,7 @@ insert into student_group (КодовыйНомерГруппы, Названи�
 ('12Г', 'М-6', 16, 'Международная экономика', 'Трубин'),
 ('10Г', 'Б-4', 21, 'Бухучёт', 'Зязюткин');
 
-insert into teacher_student_group (КодовыйНомерГруппы, КодовыйНомерПредмета, ЛичныйНомер, НомерАудитории) values
+insert into teacher_student_group (StudentGroupCodeNumber, ItemCodeNumber, PersonalNumber, AudienceNumber) values
 ('8Г', '12П', '222Л', 112),
 ('8Г', '14П', '221Л', 220),
 ('8Г', '17П', '222Л', 112),
