@@ -154,8 +154,10 @@ select ЛичныйНомер from teacher
 	where Специальность like '%ЭВМ%';
 
 #13. Получить номера предметов, изучаемых всеми студенческими группами.
-
-select distinct КодовыйНомерПредмета from teacher_student_group;
+select distinct КодовыйНомерПредмета
+from teacher_student_group
+group by КодовыйНомерПредмета
+having count(1) = (select count(1) from student_group);
 
 #14. Получить фамилии преподавателей, преподающих те же предметы, что и преподаватель преподающий предмет с номером 14П.
 
