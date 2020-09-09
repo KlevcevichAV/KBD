@@ -1,34 +1,34 @@
-drop table producer;
+drop table provider;
 drop table part;
 drop table project;
 drop table producer_part_project;
 
 create table provider
 (
-    ProviderID      text primary key,
-    ProviderName   text,
+    ProviderID      VARCHAR(2) primary key,
+    ProviderName   VARCHAR(10),
     Status int,
-    City  text
+    City  VARCHAR(10)
 );
-create table part
+create table item
 (
-    ItemID      text primary key,
-    ItemName   text,
-    Color   text,
-    Size int,
-    City  text
+    ItemID      VARCHAR(2) primary key,
+    ItemName   VARCHAR(10),
+    Color   VARCHAR(10),
+    Size INT,
+    City  VARCHAR(10)
 );
 create table project
 (
-    ProjectID    text primary key,
-    ProjectName text,
-    City text
+    ProjectID    VARCHAR(3) primary key,
+    ProjectName VARCHAR(4),
+    City VARCHAR(10)
 );
 create table provider_part_project
 (
-    ProviderID  text,
-    ItemID  text,
-    ProjectID text,
+    ProviderID  VARCHAR(2),
+    ItemID  VARCHAR(2),
+    ProjectID VARCHAR(3),
     S  int,
     primary key (ProviderID, ItemID, ProjectID)
 );
@@ -39,7 +39,7 @@ values ('П1', 'Петров', 20, 'Москва'),
        ('П3', 'Федоров', 30, 'Таллинн'),
        ('П4', 'Чаянов', 20, 'Минск'),
        ('П5', 'Крюков', 30, 'Киев');
-insert into part (ItemID, ItemName, Color, Size, City)
+insert into item (ItemID, ItemName, Color, Size, City)
 values ('Д1', 'Болт', 'Красный', 12, 'Москва'),
        ('Д2', 'Гайка', 'Зелёная', 17, 'Минск'),
        ('Д3', 'Диск', 'Черный', 17, 'Вильнюс'),
@@ -82,7 +82,7 @@ values ('П1', 'Д1', 'ПР1', 200),
 
 # 20 Получить цвета деталей, поставляемых поставщиком П1.
 select distinct Color
-from part p
+from item p
          left join provider_part_project ppp on p.ItemID = ppp.ItemID
 where ppp.ItemID = 'П1';
 # 23 Получить номера поставщиков, поставляющих по крайней мере одну деталь, поставляемую по крайней мере одним поставщиком, который поставляет по крайней мере одну красную деталь.
@@ -103,17 +103,17 @@ having count(*) = 6;
 # 2 Получить полную информацию обо всех проектах в Лондоне.
 select *
 from project
-where Город = 'Лондон';
+where City = 'Лондон';
 # 9 Получить номера деталей, поставляемых поставщиком в Лондоне.
 select Д
 from part
 where Город = 'Лондон';
 # 13 Получить номера проектов, обеспечиваемых по крайней мере одним поставщиком не из того же города.
 select t.project
-from (select ppp.ПР project, p.Город sity, count(*) cnt
-      from producer p
-               left join producer_part_project ppp on p.П = ppp.П
-      group by ppp.ПР, p.Город) t
+from (select ppp.ПР project, p.City sity, count(*) cnt
+      from provider p
+               left join producer_part_project ppp on p.ProviderID = ppp.П
+      group by ppp.ПР, p.City) t
 group by project
 having count(*) > 1;
 # 17 Для каждой детали, поставляемой для проекта, получить номер детали, номер проекта и соответствующее общее количество. ??? XD
