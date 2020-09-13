@@ -54,16 +54,16 @@ VALUES ('Д1', 'Болт', 'Красный', 12, 'Москва'),
        ('Д5', 'Корпус', 'Красный', 12, 'Минск'),
        ('Д6', 'Крышки', 'Красный', 19, 'Москва');
 
-insert into project (project_id, project_name, city)
-values ('ПР1', 'ИПР1', 'Минск'),
+INSERT INTO project (project_id, project_name, city)
+VALUES ('ПР1', 'ИПР1', 'Минск'),
        ('ПР2', 'ИПР2', 'Таллинн'),
        ('ПР3', 'ИПР3', 'Псков'),
        ('ПР4', 'ИПР4', 'Псков'),
        ('ПР5', 'ИПР5', 'Москва'),
        ('ПР6', 'ИПР6', 'Саратов'),
        ('ПР7', 'ИПР7', 'Москва');
-insert into provider_part_project (provider_id, part_id, project_id, sum)
-values ('П1', 'Д1', 'ПР1', 200),
+INSERT INTO provider_part_project (provider_id, part_id, project_id, sum)
+VALUES ('П1', 'Д1', 'ПР1', 200),
        ('П1', 'Д1', 'ПР2', 700),
        ('П2', 'Д3', 'ПР1', 400),
        ('П2', 'Д2', 'ПР2', 200),
@@ -89,77 +89,80 @@ values ('П1', 'Д1', 'ПР1', 200),
        ('П5', 'Д6', 'ПР4', 500);
 
 # 20 Получить цвета деталей, поставляемых поставщиком П1.
-select distinct color
-from part p
-         left join provider_part_project ppp on p.part_id = ppp.part_id
-where ppp.provider_id = 'П1';
+SELECT DISTINCT color
+FROM part AS p
+         LEFT JOIN provider_part_project AS ppp ON p.part_id = ppp.part_id
+WHERE ppp.provider_id = 'П1';
 # 23 Получить номера поставщиков, поставляющих по крайней мере одну деталь, поставляемую по крайней мере одним поставщиком, который поставляет по крайней мере одну красную деталь.
 SELECT DISTINCT provider_id
 FROM provider_part_project
 WHERE part_id IN (
     SELECT ppp.part_id
-    FROM provider_part_project as ppp
+    FROM provider_part_project AS ppp
     WHERE ppp.provider_id IN (
-        select distinct provider_id
-        from provider_part_project
-                 left join part p on provider_part_project.part_id = p.part_id
-        where p.color = 'Красный'
+        SELECT DISTINCT provider_id
+        FROM provider_part_project
+                 LEFT JOIN part p ON provider_part_project.part_id = p.part_id
+        WHERE p.color = 'Красный'
     )
 );
 # 31 Получить номера поставщиков, поставляющих одну и ту же деталь для всех проектов.
-select t2.producer
-from (
-         select t.provider producer, t.part part
-         from (
-                  select project_id project, provider_id provider, part_id part
-                  from provider_part_project ppp
-                  group by project, provider, part
-              ) t
-         group by t.provider, t.part, t.part
+SELECT t2.producer
+FROM (
+         SELECT t.provider producer
+         FROM (
+                  SELECT project_id project, provider_id provider, part_id part
+                  FROM provider_part_project ppp
+                  GROUP BY project, provider, part
+              ) AS t
+         GROUP BY t.provider, t.part, t.part
      ) t2
-group by t2.producer
-having count(*) = (SELECT COUNT(*) FROM project);
+GROUP BY t2.producer
+HAVING COUNT(*) = (SELECT COUNT(*) FROM project);
 # 2 Получить полную информацию обо всех проектах в Лондоне.
-select *
-from project
-where city = 'Лондон';
+SELECT *
+FROM project
+WHERE city = 'Лондон';
 # 9 Получить номера деталей, поставляемых поставщиком в Лондоне.
-select distinct part_id
-from provider_part_project as ppp
-         left join project p on ppp.project_id = p.project_id
-where p.city = 'Псков';
+SELECT DISTINCT part_id
+FROM provider_part_project AS ppp
+         LEFT JOIN project AS p ON ppp.project_id = p.project_id
+WHERE p.city = 'Псков';
 # 13 Получить номера проектов, обеспечиваемых по крайней мере одним поставщиком не из того же города.
-select distinct p2.project_id
-from provider_part_project as ppp
-         left join provider p on ppp.provider_id = p.provider_id
-         left join project p2 on ppp.project_id = p2.project_id
-where p.city != p2.city;
+SELECT DISTINCT p2.project_id
+FROM provider_part_project AS ppp
+         LEFT JOIN provider AS p ON ppp.provider_id = p.provider_id
+         LEFT JOIN project AS p2 ON ppp.project_id = p2.project_id
+WHERE p.city != p2.city;
 # 17 Для каждой детали, поставляемой для проекта, получить номер детали, номер проекта и соответствующее общее количество.
-select part_id, project_id, sum
-from provider_part_project;
+SELECT part_id, project_id, sum
+FROM provider_part_project;
 # 36 Получить все пары номеров поставщиков, скажем, Пx и Пy, такие, что оба эти поставщика поставляют в точности одно и то же множество деталей.
-select t.provider_id, t2.provider_id
-from (
-         select provider_id, SUM(t.sum) S
-         from provider_part_project t
-         group by provider_id
-     ) t,
+SELECT t.provider_id, t2.provider_id
+FROM (
+         SELECT provider_id, SUM(t.sum) AS S
+         FROM provider_part_project t
+         GROUP BY provider_id
+     ) AS t,
      (
-         select provider_id, SUM(sum) S
-         from provider_part_project
-         group by provider_id
-     ) t2
-where t2.S = t.S
-  and t.provider_id <> t2.provider_id;
+         SELECT provider_id, SUM(sum) AS S
+         FROM provider_part_project
+         GROUP BY provider_id
+     ) AS t2
+WHERE t2.S = t.S
+  AND t.provider_id <> t2.provider_id;
 # 27 Получить номера поставщиков, поставляющих деталь Д1 для некоторого проекта в количестве, большем среднего количества деталей Д1 в поставках для этого проекта.
-select provider_id from provider_part_project as ppp,
-              (SELECT project_id, avg(sum) as mean
-               FROM provider_part_project
-               group by project_id, part_id
-               having part_id = 'Д1')as t
-where t.project_id =  ppp.project_id and sum > mean and part_id = 'Д1';
+SELECT provider_id
+FROM provider_part_project AS ppp,
+     (SELECT project_id, avg(sum) AS mean
+      FROM provider_part_project
+      GROUP BY project_id, part_id
+      having part_id = 'Д1') AS t
+WHERE t.project_id = ppp.project_id
+  AND sum > mean
+  AND part_id = 'Д1';
 # 18 Получить номера деталей, поставляемых для некоторого проекта со средним количеством больше 320.
-select part_id
-from provider_part_project
-group by part_id
-having avg(sum) > 320;
+SELECT part_id
+FROM provider_part_project
+GROUP BY part_id
+HAVING avg(sum) > 320;
