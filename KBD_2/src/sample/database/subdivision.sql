@@ -1,4 +1,4 @@
-CREATE TABLE location_of_equipment
+CREATE TABLE subdivision
 (
     number     INT PRIMARY KEY,
     full_name  VARCHAR(30),

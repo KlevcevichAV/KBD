@@ -8,6 +8,30 @@ public class LocationOfEquipment {
     private String position;
     private int roomNumber;
 
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
     public LocationOfEquipment(int day, int month, int year, String fullName, String position, int roomNumber){
         this.day = day;
         this.month = month;

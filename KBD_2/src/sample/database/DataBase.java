@@ -1,5 +1,5 @@
 package sample.database;
-
+//add apostrophes for string getters
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +65,40 @@ public class DataBase {
     public void addEquipment(Equipment added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.EQUIPMENT + Constant.VALUES_EQUIPMENT + Constant.VALUES +
-                    Constant.LEFT_BRACKET + );
+            statement.executeUpdate(Constant.INSERT + Constant.EQUIPMENT + Constant.VALUES_EQUIPMENT +
+                    Constant.VALUES + Constant.LEFT_BRACKET +
+                    added.getInventoryNumber() + Constant.COMMA +
+                    added.getName() + Constant.COMMA +
+                    Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
+                    added.getPrice() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
             equipment.add(added);
+            System.out.println("We're added.");
+        }
+    }
+
+    public void addLocationOfEquipments(LocationOfEquipment added) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(Constant.INSERT + Constant.LOCATION_OF_EQUIPMENT + Constant.VALUES_LOCATION_OF_EQUIPMENT +
+                    Constant.VALUES + Constant.LEFT_BRACKET +
+                    Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
+                    added.getFullName() + Constant.COMMA +
+                    added.getPosition() + Constant.COMMA +
+                    added.getRoomNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+            locationOfEquipments.add(added);
+            System.out.println("We're added.");
+        }
+    }
+
+    public void addSubdivisions(Subdivision added) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(Constant.INSERT + Constant.SUBDIVISION + Constant.VALUES_SUBDIVISION +
+                    Constant.VALUES + Constant.LEFT_BRACKET +
+                    added.getNumber() + Constant.COMMA +
+                    added.getFullName() + Constant.COMMA +
+                    added.getShortName() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+            subdivisions.add(added);
             System.out.println("We're added.");
         }
     }
