@@ -15,6 +15,9 @@ public class Constant {
     public static String WHERE = " WHERE ";
     public static String AND = " AND ";
 
+    public static String UPDATE = "UPDATE ";
+    public static String SET = " SET ";
+
     public static String VALUES = "VALUES ";
     public static String VALUES_EQUIPMENT = "(inventory_number, name, date_of_purchase, price)";
     public static String INVENTORY_NUMBER = "inventory_number";
