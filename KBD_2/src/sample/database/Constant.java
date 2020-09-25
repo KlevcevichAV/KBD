@@ -4,6 +4,7 @@ public class Constant {
     public static String EQUIPMENT = "equipment";
     public static String LOCATION_OF_EQUIPMENT = "location_of_equipment";
     public static String SUBDIVISION = "subdivision";
+    public static String RESPONSIBLE_PERSON = "responsible_person";
 
     public static String SELECT_ALL = "SELECT * FROM ";
     public static String SELECT_EQUIPMENT = "SELECT name, day(date_of_purchase), month(date_of_purchase), year(date_of_purchase), price FROM equipment";
@@ -24,14 +25,16 @@ public class Constant {
     public static String NAME = "name";
     public static String DATE_OF_PURCHASE = "date_of_purchase";
     public static String PRICE = "price";
-    public static String VALUES_LOCATION_OF_EQUIPMENT = "(transmission_date, full_name, position, room_number)";
+    public static String VALUES_LOCATION_OF_EQUIPMENT = "(transmission_date, full_name, room_number)";
     public static String TRANSMISSION_DATE = "transmission_date";
     public static String FULL_NAME = "full_name";
-    public static String POSITION = "position";
     public static String ROOM_NUMBER = "room_number";
     public static String VALUES_SUBDIVISION = "(number, full_name, short_name)";
     public static String NUMBER = "number";
     public static String SHORT_NAME = "short_name";
+    public static String VALUES_RESPONSIBLE_PERSON = "(full_name, position)";
+    public static String POSITION = "position";
+
 
     public static String COMMA = ", ";
     public static String EQUAL = " = ";

@@ -1,5 +1,6 @@
 package sample.database;
 //add apostrophes for string getters
+//add select for another table
 //start debug :)(
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class DataBase {
     private List<Equipment> equipment;
     private List<LocationOfEquipment> locationOfEquipments;
     private List<Subdivision> subdivisions;
+    private List<ResponsiblePerson> responsiblePeople;
 
     private String whereEquipment(Equipment equipment) {
         String result = Constant.WHERE +
@@ -27,7 +29,6 @@ public class DataBase {
         String result = Constant.WHERE +
                 Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(locationOfEquipments.getDay(), locationOfEquipments.getMonth(), locationOfEquipments.getYear()) + Constant.AND +
                 Constant.FULL_NAME + Constant.EQUAL + locationOfEquipments.getFullName() + Constant.AND +
-                Constant.POSITION + Constant.EQUAL + locationOfEquipments.getPosition() + Constant.AND +
                 Constant.ROOM_NUMBER + Constant.EQUAL + locationOfEquipments.getRoomNumber();
         return result;
     }
@@ -37,6 +38,13 @@ public class DataBase {
                 Constant.NUMBER + Constant.EQUAL + subdivision.getNumber() + Constant.AND +
                 Constant.FULL_NAME + Constant.EQUAL + subdivision.getFullName() + Constant.AND +
                 Constant.SHORT_NAME + Constant.EQUAL + subdivision.getShortName();
+        return result;
+    }
+
+    private String whereResponsiblePerson(ResponsiblePerson responsiblePerson) {
+        String result = Constant.WHERE +
+                Constant.FULL_NAME + Constant.EQUAL + responsiblePerson.getFullName() + Constant.AND +
+                Constant.POSITION + Constant.EQUAL + responsiblePerson.getPosition();
         return result;
     }
 
@@ -70,7 +78,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
             while (resultSet.next()) {
-                locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), resultSet.getString(5), Integer.parseInt(resultSet.getString(6))));
+                locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(6))));
             }
             System.out.println("We're created location Of Equipments.");
         }
@@ -85,6 +93,20 @@ public class DataBase {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
             while (resultSet.next()) {
                 subdivisions.add(new Subdivision(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), resultSet.getString(3)));
+            }
+            System.out.println("We're created subdivisions.");
+        }
+    }
+
+    private void setResponsiblePerson() throws ClassNotFoundException, SQLException {
+        responsiblePeople = new ArrayList<>();
+        Class.forName("com.mysql.jdbc.Driver");
+        settingProperties();
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
+            while (resultSet.next()) {
+                responsiblePeople.add(new ResponsiblePerson(resultSet.getString(1), resultSet.getString(2)));
             }
             System.out.println("We're created subdivisions.");
         }
@@ -111,7 +133,6 @@ public class DataBase {
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
                     added.getFullName() + Constant.COMMA +
-                    added.getPosition() + Constant.COMMA +
                     added.getRoomNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
             locationOfEquipments.add(added);
             System.out.println("We're added.");
@@ -127,6 +148,18 @@ public class DataBase {
                     added.getFullName() + Constant.COMMA +
                     added.getShortName() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
             subdivisions.add(added);
+            System.out.println("We're added.");
+        }
+    }
+
+    public void addResponsiblePerson(ResponsiblePerson added) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(Constant.INSERT + Constant.RESPONSIBLE_PERSON + Constant.VALUES_SUBDIVISION +
+                    Constant.VALUES + Constant.LEFT_BRACKET +
+                    added.getFullName() + Constant.COMMA +
+                    added.getPosition() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+            responsiblePeople.add(added);
             System.out.println("We're added.");
         }
     }
@@ -152,6 +185,13 @@ public class DataBase {
         }
     }
 
+    public void deleteResponsiblePerson(ResponsiblePerson deleted) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(Constant.DELETE + Constant.RESPONSIBLE_PERSON + whereResponsiblePerson(deleted) + Constant.SEMICOLON);
+        }
+    }
+
     public void editEquipment(Equipment edited) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
@@ -170,7 +210,6 @@ public class DataBase {
             statement.executeUpdate(Constant.UPDATE + Constant.LOCATION_OF_EQUIPMENT + Constant.SET +
                     Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(edited.getDay(), edited.getMonth(), edited.getYear()) + Constant.COMMA +
                     Constant.FULL_NAME + Constant.EQUAL + edited.getFullName() + Constant.COMMA +
-                    Constant.POSITION + Constant.EQUAL + edited.getPosition() + Constant.COMMA +
                     Constant.ROOM_NUMBER + Constant.EQUAL + edited.getRoomNumber() + whereLocationOfEquipments(edited) + Constant.SEMICOLON
             );
         }
@@ -187,10 +226,21 @@ public class DataBase {
         }
     }
 
+    public void editResponsiblePerson(ResponsiblePerson edited) throws SQLException {
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
+                    Constant.FULL_NAME + Constant.EQUAL + edited.getFullName() + Constant.COMMA +
+                    Constant.POSITION + Constant.EQUAL + edited.getPosition() + whereResponsiblePerson(edited) + Constant.SEMICOLON
+            );
+        }
+    }
+
     public DataBase() throws ClassNotFoundException, SQLException {
         setEquipment();
         setSubdivisions();
         setLocationOfEquipments();
+        setResponsiblePerson();
         System.out.println("We're created database.");
     }
 

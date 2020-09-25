@@ -5,7 +5,6 @@ public class LocationOfEquipment {
     private int month;
     private int year;
     private String fullName;
-    private String position;
     private int roomNumber;
 
     public int getDay() {
@@ -24,20 +23,15 @@ public class LocationOfEquipment {
         return fullName;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public LocationOfEquipment(int day, int month, int year, String fullName, String position, int roomNumber){
+    public LocationOfEquipment(int day, int month, int year, String fullName, int roomNumber){
         this.day = day;
         this.month = month;
         this.year = year;
         this.fullName = fullName;
-        this.position = position;
         this.roomNumber = roomNumber;
     }
 }
