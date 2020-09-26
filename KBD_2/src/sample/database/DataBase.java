@@ -1,12 +1,13 @@
 package sample.database;
 //start debug :)(
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class DataBase {
-    private String url = "jdbc:mysql://localhost:3306/vocabulary?useSSL=false";
+    private String url = "jdbc:mysql://localhost:3306/KBD_2?useSSL=false";
     private Properties p;
 
     private List<Equipment> equipment;
@@ -76,7 +77,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_LOCATION_OF_EQUIPMENT);
             while (resultSet.next()) {
-                locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(6))));
+                locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(5))));
             }
             System.out.println("We're created location Of Equipments.");
         }

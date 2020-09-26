@@ -7,7 +7,7 @@ public class Constant {
     public static String RESPONSIBLE_PERSON = "responsible_person";
 
     public static String SELECT_ALL = "SELECT * FROM ";
-    public static String SELECT_EQUIPMENT = "SELECT name, day(date_of_purchase), month(date_of_purchase), year(date_of_purchase), price FROM equipment";
+    public static String SELECT_EQUIPMENT = "SELECT inventory_number, name, day(date_of_purchase), month(date_of_purchase), year(date_of_purchase), price FROM equipment";
     public static String SELECT_LOCATION_OF_EQUIPMENT = "SELECT day(transmission_date), month(transmission_date), year(transmission_date), full_name, room_number FROM location_of_equipment";
     public static String SELECT_SUBDIVISION = "SELECT number, full_name, short_name FROM subdivision";
     public static String SELECT_RESPONSIBLE_PERSON = "SELECT full_name, position FROM responsible_person";
