@@ -1,6 +1,5 @@
 package sample.database;
 //add apostrophes for string getters
-//add select for another table
 //start debug :)(
 import java.sql.*;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class DataBase {
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_LOCATION_OF_EQUIPMENT);
             while (resultSet.next()) {
                 locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(6))));
             }
@@ -90,7 +89,7 @@ public class DataBase {
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_SUBDIVISION);
             while (resultSet.next()) {
                 subdivisions.add(new Subdivision(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), resultSet.getString(3)));
             }
@@ -104,7 +103,7 @@ public class DataBase {
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_RESPONSIBLE_PERSON);
             while (resultSet.next()) {
                 responsiblePeople.add(new ResponsiblePerson(resultSet.getString(1), resultSet.getString(2)));
             }
