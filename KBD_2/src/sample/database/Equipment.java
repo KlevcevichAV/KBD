@@ -13,7 +13,7 @@ public class Equipment {
     }
 
     public String getName() {
-        return name;
+        return '\'' + name + '\'';
     }
 
     public int getDay() {
@@ -32,7 +32,7 @@ public class Equipment {
         return price;
     }
 
-    public Equipment(int inventoryNumber, String name, int day, int month, int year, double price){
+    public Equipment(int inventoryNumber, String name, int day, int month, int year, double price) {
         this.inventoryNumber = inventoryNumber;
         this.name = name;
         this.day = day;

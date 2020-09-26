@@ -1,5 +1,4 @@
 package sample.database;
-//add apostrophes for string getters
 //start debug :)(
 import java.sql.*;
 import java.util.ArrayList;

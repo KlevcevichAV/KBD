@@ -5,14 +5,14 @@ public class ResponsiblePerson {
     private String position;
 
     public String getFullName() {
-        return fullName;
+        return '\'' + fullName + '\'';
     }
 
     public String getPosition() {
-        return position;
+        return '\'' + position + '\'';
     }
 
-    public ResponsiblePerson(String fullName, String position){
+    public ResponsiblePerson(String fullName, String position) {
         this.fullName = fullName;
         this.position = position;
     }

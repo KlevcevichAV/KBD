@@ -20,14 +20,14 @@ public class LocationOfEquipment {
     }
 
     public String getFullName() {
-        return fullName;
+        return '\'' + fullName + '\'';
     }
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public LocationOfEquipment(int day, int month, int year, String fullName, int roomNumber){
+    public LocationOfEquipment(int day, int month, int year, String fullName, int roomNumber) {
         this.day = day;
         this.month = month;
         this.year = year;
