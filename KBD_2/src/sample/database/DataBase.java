@@ -51,8 +51,8 @@ public class DataBase {
     private String whereSubdivisions(Subdivision subdivision) {
         String result = Constant.WHERE +
                 Constant.NUMBER + Constant.EQUAL + subdivision.getNumber() + Constant.AND +
-                Constant.FULL_NAME + Constant.EQUAL + subdivision.getFullName() + Constant.AND +
-                Constant.SHORT_NAME + Constant.EQUAL + subdivision.getShortName();
+                Constant.FULL_NAME + Constant.EQUAL + addAp(subdivision.getFullName()) + Constant.AND +
+                Constant.SHORT_NAME + Constant.EQUAL + addAp(subdivision.getShortName());
         return result;
     }
 
@@ -154,7 +154,7 @@ public class DataBase {
         }
     }
 
-    private String addAp(String string){
+    private String addAp(String string) {
         return '\'' + string + '\'';
     }
 
@@ -212,46 +212,51 @@ public class DataBase {
         }
     }
 
-    public void editEquipment(Equipment edited) throws SQLException {
+    public void editEquipment(Equipment edited, Equipment newEquipment) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
-                    Constant.INVENTORY_NUMBER + Constant.EQUAL + edited.getInventoryNumber() + Constant.COMMA +
-                    Constant.NAME + Constant.EQUAL + edited.getName() + Constant.COMMA +
-                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(edited.getDay(), edited.getMonth(), edited.getYear()) + Constant.COMMA +
-                    Constant.PRICE + Constant.EQUAL + edited.getPrice() + whereEquipment(edited) + Constant.SEMICOLON
+                    Constant.INVENTORY_NUMBER + Constant.EQUAL + newEquipment.getInventoryNumber() + Constant.COMMA +
+                    Constant.NAME + Constant.EQUAL + newEquipment.getName() + Constant.COMMA +
+                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(newEquipment.getDay(), newEquipment.getMonth(), newEquipment.getYear()) + Constant.COMMA +
+                    Constant.PRICE + Constant.EQUAL + newEquipment.getPrice() + whereEquipment(edited) + Constant.SEMICOLON
             );
         }
     }
 
-    public void editLocationOfEquipments(LocationOfEquipment edited) throws SQLException {
+    public void editLocationOfEquipments(LocationOfEquipment edited, LocationOfEquipment newLocationOfEquipment) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.UPDATE + Constant.LOCATION_OF_EQUIPMENT + Constant.SET +
-                    Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(edited.getDay(), edited.getMonth(), edited.getYear()) + Constant.COMMA +
-                    Constant.FULL_NAME + Constant.EQUAL + edited.getFullName() + Constant.COMMA +
-                    Constant.ROOM_NUMBER + Constant.EQUAL + edited.getRoomNumber() + whereLocationOfEquipments(edited) + Constant.SEMICOLON
+                    Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(newLocationOfEquipment.getDay(), newLocationOfEquipment.getMonth(), newLocationOfEquipment.getYear()) + Constant.COMMA +
+                    Constant.FULL_NAME + Constant.EQUAL + newLocationOfEquipment.getFullName() + Constant.COMMA +
+                    Constant.ROOM_NUMBER + Constant.EQUAL + newLocationOfEquipment.getRoomNumber() + whereLocationOfEquipments(edited) + Constant.SEMICOLON
             );
         }
     }
 
-    public void editSubdivisions(Subdivision edited) throws SQLException {
+    public void editSubdivisions(Subdivision edited, Subdivision newSubdivision) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
-                    Constant.NUMBER + Constant.EQUAL + edited.getNumber() + Constant.COMMA +
-                    Constant.FULL_NAME + Constant.EQUAL + edited.getFullName() + Constant.COMMA +
-                    Constant.SHORT_NAME + Constant.EQUAL + edited.getShortName() + whereSubdivisions(edited) + Constant.SEMICOLON
-            );
+            String eq = Constant.UPDATE + Constant.SUBDIVISION + Constant.SET +
+                    Constant.NUMBER + Constant.EQUAL + newSubdivision.getNumber() + Constant.COMMA +
+                    Constant.FULL_NAME + Constant.EQUAL + addAp(newSubdivision.getFullName()) + Constant.COMMA +
+                    Constant.SHORT_NAME + Constant.EQUAL + addAp(newSubdivision.getShortName()) + whereSubdivisions(edited) + Constant.SEMICOLON;
+            statement.executeUpdate(eq);
+            for(int i = 0; i < subdivisions.size(); i++){
+                if(subdivisions.get(i) == edited){
+                    subdivisions.set(i, newSubdivision);
+                }
+            }
         }
     }
 
-    public void editResponsiblePerson(ResponsiblePerson edited) throws SQLException {
+    public void editResponsiblePerson(ResponsiblePerson edited, ResponsiblePerson newResponsiblePerson) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
-                    Constant.FULL_NAME + Constant.EQUAL + edited.getFullName() + Constant.COMMA +
-                    Constant.POSITION + Constant.EQUAL + edited.getPosition() + whereResponsiblePerson(edited) + Constant.SEMICOLON
+                    Constant.FULL_NAME + Constant.EQUAL + newResponsiblePerson.getFullName() + Constant.COMMA +
+                    Constant.POSITION + Constant.EQUAL + newResponsiblePerson.getPosition() + whereResponsiblePerson(edited) + Constant.SEMICOLON
             );
         }
     }

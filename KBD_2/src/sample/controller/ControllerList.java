@@ -66,7 +66,7 @@ public class ControllerList {
     @FXML
     private Button menuButton;
 
-    private void createSubdivisionTable(){
+    private void createSubdivisionTable() {
         tableSubdivisions.setVisible(true);
         System.out.println(dataBase.getSubdivisions().size());
         ObservableList<Subdivision> test = FXCollections.observableArrayList(dataBase.getSubdivisions());
@@ -76,38 +76,39 @@ public class ControllerList {
         shortName.setCellValueFactory(new PropertyValueFactory<Subdivision, String>("shortName"));
     }
 
-    private void hideTables(){
+    private void hideTables() {
         tableSubdivisions.setVisible(false);
         tableStaff.setVisible(false);
         tableTechnics.setVisible(false);
         tableTransfer.setVisible(false);
     }
 
-    private int setInterface(){
+    private int setInterface() {
         int pointer;
-        switch (Controller.getPointerInterface()){
-            case 0:{
+        switch (Controller.getPointerInterface()) {
+            case 0: {
                 pointer = 0;
                 addButton.setText("ДОБАВИТЬ ТЕХНИКУ");
                 break;
             }
-            case 1:{
+            case 1: {
                 pointer = 1;
                 createSubdivisionTable();
                 addButton.setText("ДОБАВИТЬ ПОДРАЗДЕЛЕНИЕ");
                 break;
             }
-            case 2:{
+            case 2: {
                 pointer = 2;
                 addButton.setText("ДОБАВИТЬ ОТВЕТСТВЕННОЕ ЛИЦО");
                 break;
             }
-            case 3:{
+            case 3: {
                 pointer = 3;
                 addButton.setText("ДОБАВИТЬ ПЕРЕДАЧУ");
                 break;
             }
-            default: return -1;
+            default:
+                return -1;
         }
         return pointer;
     }
@@ -118,7 +119,7 @@ public class ControllerList {
         dialogStage.setTitle("Edit Person");
         dialogStage.initModality(Modality.WINDOW_MODAL);
 //        dialogStage.initOwner(primaryStage);
-        Scene scene = new Scene(root, 350,350);
+        Scene scene = new Scene(root, 350, 350);
         dialogStage.setScene(scene);
         dialogStage.showAndWait();
     }
@@ -143,7 +144,7 @@ public class ControllerList {
         addButton.setOnAction(event -> {
             try {
                 createDialogWindow();
-                if(ControllerAddEditWindowSubdivision.result){
+                if (ControllerAddEditWindowSubdivision.result) {
                     dataBase.addSubdivisions(ControllerAddEditWindowSubdivision.getSubdivision());
                     ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
                     tableSubdivisions.setItems(temp);
@@ -151,6 +152,22 @@ public class ControllerList {
                 equipment = null;
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
+            }
+        });
+        editButton.setOnAction(event -> {
+            if (tableSubdivisions.getSelectionModel().getSelectedItem() != null) {
+                subdivision = tableSubdivisions.getSelectionModel().getSelectedItem();
+                try {
+                    createDialogWindow();
+                    if (ControllerAddEditWindowSubdivision.result) {
+                        dataBase.editSubdivisions(subdivision, ControllerAddEditWindowSubdivision.getSubdivision());
+                        ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
+                        tableSubdivisions.setItems(temp);
+                    }
+                    equipment = null;
+                } catch (IOException | SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 //        if(pointerInterface == -1) return;
