@@ -202,6 +202,11 @@ public class DataBase {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.DELETE + Constant.SUBDIVISION + whereSubdivisions(deleted) + Constant.SEMICOLON);
+            for(int i = 0; i < subdivisions.size(); i++){
+                if(subdivisions.get(i) == deleted){
+                    subdivisions.remove(i);
+                }
+            }
         }
     }
 

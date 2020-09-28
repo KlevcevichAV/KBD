@@ -170,6 +170,17 @@ public class ControllerList {
                 }
             }
         });
+        deleteButton.setOnAction(event -> {
+            if(tableSubdivisions.getSelectionModel().getSelectedItem() != null){
+                try {
+                    dataBase.deleteSubdivisions(tableSubdivisions.getSelectionModel().getSelectedItem());
+                    ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
+                    tableSubdivisions.setItems(temp);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 //        if(pointerInterface == -1) return;
     }
 }
