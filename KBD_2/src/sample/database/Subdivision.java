@@ -10,11 +10,11 @@ public class Subdivision {
     }
 
     public String getFullName() {
-        return '\'' + fullName + '\'';
+        return fullName;
     }
 
     public String getShortName() {
-        return '\'' + shortName + '\'';
+        return shortName;
     }
 
     public Subdivision(int number, String fullName, String shortName) {

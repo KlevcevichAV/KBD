@@ -15,6 +15,22 @@ public class DataBase {
     private List<Subdivision> subdivisions;
     private List<ResponsiblePerson> responsiblePeople;
 
+    public List<Equipment> getEquipment() {
+        return equipment;
+    }
+
+    public List<LocationOfEquipment> getLocationOfEquipments() {
+        return locationOfEquipments;
+    }
+
+    public List<ResponsiblePerson> getResponsiblePeople() {
+        return responsiblePeople;
+    }
+
+    public List<Subdivision> getSubdivisions() {
+        return subdivisions;
+    }
+
     private String whereEquipment(Equipment equipment) {
         String result = Constant.WHERE +
                 Constant.INVENTORY_NUMBER + Constant.EQUAL + equipment.getInventoryNumber() + Constant.AND +
@@ -138,14 +154,19 @@ public class DataBase {
         }
     }
 
+    private String addAp(String string){
+        return '\'' + string + '\'';
+    }
+
     public void addSubdivisions(Subdivision added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.SUBDIVISION + Constant.VALUES_SUBDIVISION +
+            String eq = Constant.INSERT + Constant.SUBDIVISION + Constant.VALUES_SUBDIVISION +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     added.getNumber() + Constant.COMMA +
-                    added.getFullName() + Constant.COMMA +
-                    added.getShortName() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+                    addAp(added.getFullName()) + Constant.COMMA +
+                    addAp(added.getShortName()) + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+            statement.executeUpdate(eq);
             subdivisions.add(added);
             System.out.println("We're added.");
         }

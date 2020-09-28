@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowSubdivision">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="478.0" spacing="25.0">
+               <children>
+                  <Label prefHeight="30.0" text="Номер" />
+                  <Label prefHeight="30.0" text="Полное название" />
+                  <Label prefHeight="30.0" text="Краткое название" />
+               </children>
+               <padding>
+                  <Insets left="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="400.0" prefWidth="500.0" spacing="25.0">
+               <children>
+                  <TextField fx:id="numberField" prefHeight="30.0" />
+                  <TextField fx:id="fullNameField" prefHeight="30.0" />
+                  <TextField fx:id="shortNameField" prefHeight="30.0" />
+               </children>
+               <padding>
+                  <Insets right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefHeight="2.0" prefWidth="353.0" style="visibility: false;" />
+            <Button fx:id="decisionButton" mnemonicParsing="false" text="Button" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Отмена" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

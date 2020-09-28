@@ -5,17 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.database.DataBase;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-//        primaryStage.setTitle("Hello World");
-//        primaryStage.setScene(new Scene(root, 300, 275));
-//        primaryStage.show();
-        DataBase dataBase = new DataBase();
+        Parent root = FXMLLoader.load(getClass().getResource("view/sample.fxml"));
+//        Controller controller = new Controller(root);
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 600, 350));
+        primaryStage.show();
         System.out.println("Good!");
     }
 

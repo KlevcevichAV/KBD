@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerList">
+   <top>
+      <Label fx:id="label" text="Label" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="addButton" mnemonicParsing="false" text="Button" />
+            <Button fx:id="editButton" mnemonicParsing="false" text="РеДАКТИРОВАТЬ" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" text="УДАЛИТЬ" />
+            <Button fx:id="menuButton" mnemonicParsing="false" text="В МЕНЮ" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="20.0" top="20.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <right>
+      <VBox fx:id="changeButtonsBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="25.0" />
+         </padding>
+      </VBox>
+   </right>
+   <center>
+      <Group BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableTechnics" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tableSubdivisions" prefHeight="200.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="number" prefWidth="75.0" text="Number" />
+                  <TableColumn fx:id="fullName" prefWidth="75.0" text="Full name" />
+                  <TableColumn fx:id="shortName" prefWidth="75.0" text="Short name" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tableStaff" prefHeight="200.0" prefWidth="200.0">
+            </TableView>
+            <TableView fx:id="tableTransfer" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </Group>
+   </center>
+</BorderPane>
