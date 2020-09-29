@@ -42,8 +42,10 @@
          <children>
             <TableView fx:id="tableTechnics" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="inventoryNumber" prefWidth="75.0" text="Inventory number" />
+                <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
+                  <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
+                  <TableColumn fx:id="price" prefWidth="75.0" text="Price" />
               </columns>
             </TableView>
             <TableView fx:id="tableSubdivisions" prefHeight="200.0" prefWidth="200.0">

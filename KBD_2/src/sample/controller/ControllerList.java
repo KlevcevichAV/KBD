@@ -23,10 +23,10 @@ import java.sql.SQLException;
 public class ControllerList {
 
     private DataBase dataBase;
-    public static Equipment equipment;
+    public static Technics technics;
     public static Subdivision subdivision;
-    public static LocationOfEquipment locationOfEquipment;
-    public static ResponsiblePerson responsiblePerson;
+    public static Transfer transfer;
+    public static Staff staff;
     @FXML
     private VBox changeButtonsBox;
 
@@ -34,7 +34,19 @@ public class ControllerList {
     private Label label;
 
     @FXML
-    private TableView<?> tableTechnics;
+    private TableView<Technics> tableTechnics;
+
+    @FXML
+    private TableColumn<Technics, Integer> inventoryNumber;
+
+    @FXML
+    private TableColumn<Technics, String> name;
+
+    @FXML
+    private TableColumn<Technics, String> date;
+
+    @FXML
+    private TableColumn<Technics, Double> price;
 
     @FXML
     private TableView<Subdivision> tableSubdivisions;
@@ -66,6 +78,18 @@ public class ControllerList {
     @FXML
     private Button menuButton;
 
+    private void createTechnicTable() {
+        hideTables();
+        tableTechnics.setVisible(true);
+        System.out.println(dataBase.getSubdivisions().size());
+        ObservableList<Technics> test = FXCollections.observableArrayList(dataBase.getTechnics());
+        tableTechnics.setItems(test);
+        inventoryNumber.setCellValueFactory(new PropertyValueFactory<Technics, Integer>("inventoryNumber"));
+        name.setCellValueFactory(new PropertyValueFactory<Technics, String>("name"));
+        date.setCellValueFactory(new PropertyValueFactory<Technics, String>("date"));
+        price.setCellValueFactory(new PropertyValueFactory<Technics, Double>("price"));
+    }
+
     private void createSubdivisionTable() {
         tableSubdivisions.setVisible(true);
         System.out.println(dataBase.getSubdivisions().size());
@@ -88,6 +112,7 @@ public class ControllerList {
         switch (Controller.getPointerInterface()) {
             case 0: {
                 pointer = 0;
+                createTechnicTable();
                 addButton.setText("ДОБАВИТЬ ТЕХНИКУ");
                 break;
             }
@@ -149,7 +174,7 @@ public class ControllerList {
                     ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
                     tableSubdivisions.setItems(temp);
                 }
-                equipment = null;
+                technics = null;
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
@@ -164,7 +189,7 @@ public class ControllerList {
                         ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
                         tableSubdivisions.setItems(temp);
                     }
-                    equipment = null;
+                    technics = null;
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 }

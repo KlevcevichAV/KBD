@@ -1,4 +1,4 @@
-CREATE TABLE equipment
+CREATE TABLE technics
 (
     inventory_number INT PRIMARY KEY,
     name             VARCHAR(30),

@@ -10,41 +10,41 @@ public class DataBase {
     private String url = "jdbc:mysql://localhost:3306/KBD_2?useSSL=false";
     private Properties p;
 
-    private List<Equipment> equipment;
-    private List<LocationOfEquipment> locationOfEquipments;
+    private List<Technics> technics;
+    private List<Transfer> transfers;
     private List<Subdivision> subdivisions;
-    private List<ResponsiblePerson> responsiblePeople;
+    private List<Staff> staff;
 
-    public List<Equipment> getEquipment() {
-        return equipment;
+    public List<Technics> getTechnics() {
+        return technics;
     }
 
-    public List<LocationOfEquipment> getLocationOfEquipments() {
-        return locationOfEquipments;
+    public List<Transfer> getTransfers() {
+        return transfers;
     }
 
-    public List<ResponsiblePerson> getResponsiblePeople() {
-        return responsiblePeople;
+    public List<Staff> getStaff() {
+        return staff;
     }
 
     public List<Subdivision> getSubdivisions() {
         return subdivisions;
     }
 
-    private String whereEquipment(Equipment equipment) {
+    private String whereTechnics(Technics technics) {
         String result = Constant.WHERE +
-                Constant.INVENTORY_NUMBER + Constant.EQUAL + equipment.getInventoryNumber() + Constant.AND +
-                Constant.NAME + Constant.EQUAL + equipment.getName() + Constant.AND +
-                Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(equipment.getDay(), equipment.getMonth(), equipment.getYear()) + Constant.AND +
-                Constant.PRICE + Constant.EQUAL + equipment.getPrice();
+                Constant.INVENTORY_NUMBER + Constant.EQUAL + technics.getInventoryNumber() + Constant.AND +
+                Constant.NAME + Constant.EQUAL + technics.getName() + Constant.AND +
+                Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(technics.getDay(), technics.getMonth(), technics.getYear()) + Constant.AND +
+                Constant.PRICE + Constant.EQUAL + technics.getPrice();
         return result;
     }
 
-    private String whereLocationOfEquipments(LocationOfEquipment locationOfEquipments) {
+    private String whereTransfers(Transfer Transfers) {
         String result = Constant.WHERE +
-                Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(locationOfEquipments.getDay(), locationOfEquipments.getMonth(), locationOfEquipments.getYear()) + Constant.AND +
-                Constant.FULL_NAME + Constant.EQUAL + locationOfEquipments.getFullName() + Constant.AND +
-                Constant.ROOM_NUMBER + Constant.EQUAL + locationOfEquipments.getRoomNumber();
+                Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(Transfers.getDay(), Transfers.getMonth(), Transfers.getYear()) + Constant.AND +
+                Constant.FULL_NAME + Constant.EQUAL + Transfers.getFullName() + Constant.AND +
+                Constant.ROOM_NUMBER + Constant.EQUAL + Transfers.getRoomNumber();
         return result;
     }
 
@@ -56,10 +56,10 @@ public class DataBase {
         return result;
     }
 
-    private String whereResponsiblePerson(ResponsiblePerson responsiblePerson) {
+    private String whereStaff(Staff staff) {
         String result = Constant.WHERE +
-                Constant.FULL_NAME + Constant.EQUAL + responsiblePerson.getFullName() + Constant.AND +
-                Constant.POSITION + Constant.EQUAL + responsiblePerson.getPosition();
+                Constant.FULL_NAME + Constant.EQUAL + staff.getFullName() + Constant.AND +
+                Constant.POSITION + Constant.EQUAL + staff.getPosition();
         return result;
     }
 
@@ -71,31 +71,31 @@ public class DataBase {
         p.setProperty("characterEncoding", "cp1251");
     }
 
-    private void setEquipment() throws ClassNotFoundException, SQLException {
-        equipment = new ArrayList<>();
+    private void setTechnics() throws ClassNotFoundException, SQLException {
+        technics = new ArrayList<>();
         Class.forName("com.mysql.jdbc.Driver");
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_EQUIPMENT);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_TECHNICS);
             while (resultSet.next()) {
-                equipment.add(new Equipment(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), Integer.parseInt(resultSet.getString(3)), Integer.parseInt(resultSet.getString(4)), Integer.parseInt(resultSet.getString(5)), Integer.parseInt(resultSet.getString(6))));
+                technics.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), Integer.parseInt(resultSet.getString(3)), Integer.parseInt(resultSet.getString(4)), Integer.parseInt(resultSet.getString(5)), Integer.parseInt(resultSet.getString(6))));
             }
-            System.out.println("We're created equipment.");
+            System.out.println("We're created Technics.");
         }
     }
 
-    private void setLocationOfEquipments() throws ClassNotFoundException, SQLException {
-        locationOfEquipments = new ArrayList<>();
+    private void setTransfers() throws ClassNotFoundException, SQLException {
+        transfers = new ArrayList<>();
         Class.forName("com.mysql.jdbc.Driver");
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_LOCATION_OF_EQUIPMENT);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_TRANSFER);
             while (resultSet.next()) {
-                locationOfEquipments.add(new LocationOfEquipment(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(5))));
+                transfers.add(new Transfer(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(5))));
             }
-            System.out.println("We're created location Of Equipments.");
+            System.out.println("We're created location Of Technicss.");
         }
     }
 
@@ -113,43 +113,43 @@ public class DataBase {
         }
     }
 
-    private void setResponsiblePerson() throws ClassNotFoundException, SQLException {
-        responsiblePeople = new ArrayList<>();
+    private void setStaff() throws ClassNotFoundException, SQLException {
+        staff = new ArrayList<>();
         Class.forName("com.mysql.jdbc.Driver");
         settingProperties();
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(Constant.SELECT_RESPONSIBLE_PERSON);
+            ResultSet resultSet = statement.executeQuery(Constant.SELECT_STAFF);
             while (resultSet.next()) {
-                responsiblePeople.add(new ResponsiblePerson(resultSet.getString(1), resultSet.getString(2)));
+                staff.add(new Staff(resultSet.getString(1), resultSet.getString(2)));
             }
             System.out.println("We're created subdivisions.");
         }
     }
 
-    public void addEquipment(Equipment added) throws SQLException {
+    public void addTechnics(Technics added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.EQUIPMENT + Constant.VALUES_EQUIPMENT +
+            statement.executeUpdate(Constant.INSERT + Constant.TECHNICS + Constant.VALUES_TECHNICS +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     added.getInventoryNumber() + Constant.COMMA +
                     added.getName() + Constant.COMMA +
                     Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
                     added.getPrice() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
-            equipment.add(added);
+            technics.add(added);
             System.out.println("We're added.");
         }
     }
 
-    public void addLocationOfEquipments(LocationOfEquipment added) throws SQLException {
+    public void addTransfers(Transfer added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.LOCATION_OF_EQUIPMENT + Constant.VALUES_LOCATION_OF_EQUIPMENT +
+            statement.executeUpdate(Constant.INSERT + Constant.STAFF + Constant.VALUES_STAFF +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
                     added.getFullName() + Constant.COMMA +
                     added.getRoomNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
-            locationOfEquipments.add(added);
+            transfers.add(added);
             System.out.println("We're added.");
         }
     }
@@ -172,29 +172,29 @@ public class DataBase {
         }
     }
 
-    public void addResponsiblePerson(ResponsiblePerson added) throws SQLException {
+    public void addStaff(Staff added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.RESPONSIBLE_PERSON + Constant.VALUES_SUBDIVISION +
+            statement.executeUpdate(Constant.INSERT + Constant.STAFF + Constant.VALUES_SUBDIVISION +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     added.getFullName() + Constant.COMMA +
                     added.getPosition() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
-            responsiblePeople.add(added);
+            staff.add(added);
             System.out.println("We're added.");
         }
     }
 
-    public void deleteEquipment(Equipment deleted) throws SQLException {
+    public void deleteTechnics(Technics deleted) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.DELETE + Constant.EQUIPMENT + whereEquipment(deleted) + Constant.SEMICOLON);
+            statement.executeUpdate(Constant.DELETE + Constant.TECHNICS + whereTechnics(deleted) + Constant.SEMICOLON);
         }
     }
 
-    public void deleteLocationOfEquipments(LocationOfEquipment deleted) throws SQLException {
+    public void deleteTransfers(Transfer deleted) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.DELETE + Constant.LOCATION_OF_EQUIPMENT + whereLocationOfEquipments(deleted) + Constant.SEMICOLON);
+            statement.executeUpdate(Constant.DELETE + Constant.STAFF + whereTransfers(deleted) + Constant.SEMICOLON);
         }
     }
 
@@ -210,32 +210,32 @@ public class DataBase {
         }
     }
 
-    public void deleteResponsiblePerson(ResponsiblePerson deleted) throws SQLException {
+    public void deleteStaff(Staff deleted) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.DELETE + Constant.RESPONSIBLE_PERSON + whereResponsiblePerson(deleted) + Constant.SEMICOLON);
+            statement.executeUpdate(Constant.DELETE + Constant.STAFF + whereStaff(deleted) + Constant.SEMICOLON);
         }
     }
 
-    public void editEquipment(Equipment edited, Equipment newEquipment) throws SQLException {
+    public void editTechnics(Technics edited, Technics newTechnics) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
-                    Constant.INVENTORY_NUMBER + Constant.EQUAL + newEquipment.getInventoryNumber() + Constant.COMMA +
-                    Constant.NAME + Constant.EQUAL + newEquipment.getName() + Constant.COMMA +
-                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(newEquipment.getDay(), newEquipment.getMonth(), newEquipment.getYear()) + Constant.COMMA +
-                    Constant.PRICE + Constant.EQUAL + newEquipment.getPrice() + whereEquipment(edited) + Constant.SEMICOLON
+            statement.executeUpdate(Constant.UPDATE + Constant.TECHNICS + Constant.SET +
+                    Constant.INVENTORY_NUMBER + Constant.EQUAL + newTechnics.getInventoryNumber() + Constant.COMMA +
+                    Constant.NAME + Constant.EQUAL + newTechnics.getName() + Constant.COMMA +
+                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(newTechnics.getDay(), newTechnics.getMonth(), newTechnics.getYear()) + Constant.COMMA +
+                    Constant.PRICE + Constant.EQUAL + newTechnics.getPrice() + whereTechnics(edited) + Constant.SEMICOLON
             );
         }
     }
 
-    public void editLocationOfEquipments(LocationOfEquipment edited, LocationOfEquipment newLocationOfEquipment) throws SQLException {
+    public void editTransfers(Transfer edited, Transfer newTransfer) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.LOCATION_OF_EQUIPMENT + Constant.SET +
-                    Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(newLocationOfEquipment.getDay(), newLocationOfEquipment.getMonth(), newLocationOfEquipment.getYear()) + Constant.COMMA +
-                    Constant.FULL_NAME + Constant.EQUAL + newLocationOfEquipment.getFullName() + Constant.COMMA +
-                    Constant.ROOM_NUMBER + Constant.EQUAL + newLocationOfEquipment.getRoomNumber() + whereLocationOfEquipments(edited) + Constant.SEMICOLON
+            statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
+                    Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(newTransfer.getDay(), newTransfer.getMonth(), newTransfer.getYear()) + Constant.COMMA +
+                    Constant.FULL_NAME + Constant.EQUAL + newTransfer.getFullName() + Constant.COMMA +
+                    Constant.ROOM_NUMBER + Constant.EQUAL + newTransfer.getRoomNumber() + whereTransfers(edited) + Constant.SEMICOLON
             );
         }
     }
@@ -256,21 +256,21 @@ public class DataBase {
         }
     }
 
-    public void editResponsiblePerson(ResponsiblePerson edited, ResponsiblePerson newResponsiblePerson) throws SQLException {
+    public void editStaff(Staff edited, Staff newStaff) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.EQUIPMENT + Constant.SET +
-                    Constant.FULL_NAME + Constant.EQUAL + newResponsiblePerson.getFullName() + Constant.COMMA +
-                    Constant.POSITION + Constant.EQUAL + newResponsiblePerson.getPosition() + whereResponsiblePerson(edited) + Constant.SEMICOLON
+            statement.executeUpdate(Constant.UPDATE + Constant.TECHNICS + Constant.SET +
+                    Constant.FULL_NAME + Constant.EQUAL + newStaff.getFullName() + Constant.COMMA +
+                    Constant.POSITION + Constant.EQUAL + newStaff.getPosition() + whereStaff(edited) + Constant.SEMICOLON
             );
         }
     }
 
     public DataBase() throws ClassNotFoundException, SQLException {
-        setEquipment();
+        setTechnics();
         setSubdivisions();
-        setLocationOfEquipments();
-        setResponsiblePerson();
+        setTransfers();
+        setStaff();
         System.out.println("We're created database.");
     }
 

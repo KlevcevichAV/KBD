@@ -1,11 +1,12 @@
 package sample.database;
 
-public class Equipment {
+public class Technics {
     private int inventoryNumber;
     private String name;
     private int day;
     private int month;
     private int year;
+    private String date;
     private double price;
 
     public int getInventoryNumber() {
@@ -32,12 +33,17 @@ public class Equipment {
         return price;
     }
 
-    public Equipment(int inventoryNumber, String name, int day, int month, int year, double price) {
+    public String getDate() {
+        return date;
+    }
+
+    public Technics(int inventoryNumber, String name, int day, int month, int year, double price) {
         this.inventoryNumber = inventoryNumber;
         this.name = name;
         this.day = day;
         this.month = month;
         this.year = year;
         this.price = price;
+        date = year + "-" + month + "-" + day;
     }
 }

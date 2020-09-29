@@ -1,6 +1,6 @@
 package sample.database;
 
-public class ResponsiblePerson {
+public class Staff {
     private String fullName;
     private String position;
 
@@ -12,7 +12,7 @@ public class ResponsiblePerson {
         return '\'' + position + '\'';
     }
 
-    public ResponsiblePerson(String fullName, String position) {
+    public Staff(String fullName, String position) {
         this.fullName = fullName;
         this.position = position;
     }

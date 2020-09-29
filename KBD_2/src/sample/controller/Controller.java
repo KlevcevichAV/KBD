@@ -45,6 +45,17 @@ public class Controller {
                 e.printStackTrace();
             }
         });
+        technics.setOnAction(event -> {
+            try {
+                pointerInterface = 0;
+                Parent root = FXMLLoader.load(Main.class.getResource("view/list.fxml"));
+                Stage stage = (Stage) subdivisions.getScene().getWindow();
+                stage.setTitle("Technics");
+                stage.setScene(new Scene(root, 650, 350));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }

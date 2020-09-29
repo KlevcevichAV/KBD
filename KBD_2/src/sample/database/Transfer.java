@@ -1,6 +1,6 @@
 package sample.database;
 
-public class LocationOfEquipment {
+public class Transfer {
     private int day;
     private int month;
     private int year;
@@ -27,7 +27,7 @@ public class LocationOfEquipment {
         return roomNumber;
     }
 
-    public LocationOfEquipment(int day, int month, int year, String fullName, int roomNumber) {
+    public Transfer(int day, int month, int year, String fullName, int roomNumber) {
         this.day = day;
         this.month = month;
         this.year = year;

@@ -4,16 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.database.Equipment;
+import sample.database.Technics;
 
 public class ControllerAddEditWindowEquipment {
 
-    private static Equipment equipment;
+    private static Technics technics;
     public static boolean result;
 
-    public static Equipment getEquipment() {
-        Equipment result = equipment;
-        equipment = null;
+    public static Technics getEquipment() {
+        Technics result = technics;
+        technics = null;
         return result;
     }
 
@@ -45,7 +45,7 @@ public class ControllerAddEditWindowEquipment {
     private Button cancelButton;
 
     private void setTextInField(){
-        Equipment temp = ControllerList.equipment;
+        Technics temp = ControllerList.technics;
         inventoryNumberField.setText("" + temp.getInventoryNumber());
         nameField.setText(temp.getName());
         dayField.setText(temp.getDay() + "");
@@ -56,7 +56,7 @@ public class ControllerAddEditWindowEquipment {
 
     @FXML
     void initialize(){
-        if(ControllerList.equipment != null){
+        if(ControllerList.technics != null){
             setTextInField();
         }
 
@@ -70,7 +70,7 @@ public class ControllerAddEditWindowEquipment {
 
         decisionButton.setOnAction(event -> {
             result = true;
-            equipment = new Equipment(Integer.parseInt(inventoryNumberField.getText()), nameField.getText(), Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()));
+            technics = new Technics(Integer.parseInt(inventoryNumberField.getText()), nameField.getText(), Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()));
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         });

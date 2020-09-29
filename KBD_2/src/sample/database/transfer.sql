@@ -1,4 +1,4 @@
-CREATE TABLE location_of_equipment
+CREATE TABLE transfer
 (
     transmission_date DATE,
     full_name         VARCHAR(30),
