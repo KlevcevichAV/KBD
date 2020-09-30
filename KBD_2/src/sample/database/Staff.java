@@ -5,11 +5,11 @@ public class Staff {
     private String position;
 
     public String getFullName() {
-        return '\'' + fullName + '\'';
+        return fullName;
     }
 
     public String getPosition() {
-        return '\'' + position + '\'';
+        return position;
     }
 
     public Staff(String fullName, String position) {

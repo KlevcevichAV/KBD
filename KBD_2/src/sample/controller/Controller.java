@@ -58,6 +58,18 @@ public class Controller {
             }
         });
 
+        staff.setOnAction(event -> {
+            try {
+                pointerInterface = 2;
+                Parent root = FXMLLoader.load(Main.class.getResource("view/list.fxml"));
+                Stage stage = (Stage) staff.getScene().getWindow();
+                stage.setTitle("Staff");
+                stage.setScene(new Scene(root, 650, 350));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         technics.setOnAction(event -> {
             try {
                 pointerInterface = 0;

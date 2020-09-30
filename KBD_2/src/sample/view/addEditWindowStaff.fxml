@@ -9,19 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowEquipment">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="162.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowStaff">
    <center>
       <HBox prefHeight="400.0" prefWidth="478.0" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="400.0" prefWidth="506.0" spacing="13.0">
                <children>
-                  <Label prefHeight="26.0" text="Инвентарный номер" />
-                  <Label prefHeight="26.0" text="Название" />
-                  <Label prefHeight="26.0" text="Модель" />
-                  <Label prefHeight="26.0" text="День приобретения" />
-                  <Label prefHeight="26.0" text="Месяц приобретения" />
-                  <Label prefHeight="26.0" text="Год приобретения" />
-                  <Label prefHeight="26.0" text="Стоимость" />
+                  <Label prefHeight="26.0" text="Полное имя" />
+                  <Label prefHeight="26.0" text="Должность" />
                </children>
                <padding>
                   <Insets left="25.0" top="20.0" />
@@ -29,13 +24,8 @@
             </VBox>
             <VBox prefHeight="400.0" prefWidth="500.0" spacing="13.0">
                <children>
-                  <TextField fx:id="inventoryNumberField" prefWidth="332.0" />
-                  <TextField fx:id="nameField" />
-                  <TextField fx:id="modelField" />
-                  <TextField fx:id="dayField" />
-                  <TextField fx:id="monthField" />
-                  <TextField fx:id="yearField" />
-                  <TextField fx:id="priceField" />
+                  <TextField fx:id="fullName" />
+                  <TextField fx:id="position" />
                </children>
                <padding>
                   <Insets right="25.0" top="20.0" />

@@ -58,8 +58,8 @@ public class DataBase {
 
     private String whereStaff(Staff staff) {
         String result = Constant.WHERE +
-                Constant.FULL_NAME + Constant.EQUAL + staff.getFullName() + Constant.AND +
-                Constant.POSITION + Constant.EQUAL + staff.getPosition();
+                Constant.FULL_NAME + Constant.EQUAL + addAp(staff.getFullName()) + Constant.AND +
+                Constant.POSITION + Constant.EQUAL + addAp(staff.getPosition());
         return result;
     }
 
@@ -176,10 +176,11 @@ public class DataBase {
     public void addStaff(Staff added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.STAFF + Constant.VALUES_SUBDIVISION +
+            String eq = Constant.INSERT + Constant.STAFF + Constant.VALUES_STAFF +
                     Constant.VALUES + Constant.LEFT_BRACKET +
-                    added.getFullName() + Constant.COMMA +
-                    added.getPosition() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+                    addAp(added.getFullName()) + Constant.COMMA +
+                    addAp(added.getPosition()) + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+            statement.executeUpdate(eq);
             staff.add(added);
             System.out.println("We're added.");
         }
@@ -226,6 +227,11 @@ public class DataBase {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.DELETE + Constant.STAFF + whereStaff(deleted) + Constant.SEMICOLON);
+            for(int i = 0; i < staff.size(); i++){
+                if(staff.get(i) == deleted){
+                    staff.remove(i);
+                }
+            }
         }
     }
 
@@ -241,6 +247,7 @@ public class DataBase {
             for(int i = 0; i < subdivisions.size(); i++){
                 if(technics.get(i) == edited){
                     technics.set(i, newTechnics);
+                    break;
                 }
             }
         }
@@ -249,7 +256,7 @@ public class DataBase {
     public void editTransfers(Transfer edited, Transfer newTransfer) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.TRANSFER + Constant.SET +
+            statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
                     Constant.TRANSMISSION_DATE + Constant.EQUAL + addAp(Constant.intToDate(newTransfer.getDay(), newTransfer.getMonth(), newTransfer.getYear())) + Constant.COMMA +
                     Constant.FULL_NAME + Constant.EQUAL + addAp(newTransfer.getFullName()) + Constant.COMMA +
                     Constant.ROOM_NUMBER + Constant.EQUAL + newTransfer.getRoomNumber() + whereTransfers(edited) + Constant.SEMICOLON
@@ -257,6 +264,7 @@ public class DataBase {
             for(int i = 0; i < transfers.size(); i++){
                 if(transfers.get(i) == edited){
                     transfers.set(i, newTransfer);
+                    break;
                 }
             }
         }
@@ -282,10 +290,16 @@ public class DataBase {
     public void editStaff(Staff edited, Staff newStaff) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.TECHNICS + Constant.SET +
-                    Constant.FULL_NAME + Constant.EQUAL + newStaff.getFullName() + Constant.COMMA +
-                    Constant.POSITION + Constant.EQUAL + newStaff.getPosition() + whereStaff(edited) + Constant.SEMICOLON
+            statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
+                    Constant.FULL_NAME + Constant.EQUAL + addAp(newStaff.getFullName()) + Constant.COMMA +
+                    Constant.POSITION + Constant.EQUAL + addAp(newStaff.getPosition()) + whereStaff(edited) + Constant.SEMICOLON
             );
+            for(int i = 0; i < staff.size(); i++){
+                if(staff.get(i) == edited){
+                    staff.set(i, newStaff);
+                    break;
+                }
+            }
         }
     }
 

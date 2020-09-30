@@ -59,7 +59,13 @@ public class ControllerList {
     private TableColumn<Subdivision, String> shortName;
 
     @FXML
-    private TableView<?> tableStaff;
+    private TableView<Staff> tableStaff;
+
+    @FXML
+    private TableColumn<Staff, String> fullNameStaff;
+
+    @FXML
+    private TableColumn<Staff, String> positionStaff;
 
     @FXML
     private TableView<Transfer> tableTransfer;
@@ -108,6 +114,15 @@ public class ControllerList {
         shortName.setCellValueFactory(new PropertyValueFactory<Subdivision, String>("shortName"));
     }
 
+    private void createStaffTable() {
+        hideTables();
+        tableStaff.setVisible(true);
+        ObservableList<Staff> test = FXCollections.observableArrayList(dataBase.getStaff());
+        tableStaff.setItems(test);
+        fullNameStaff.setCellValueFactory(new PropertyValueFactory<Staff, String>("fullName"));
+        positionStaff.setCellValueFactory(new PropertyValueFactory<Staff, String>("position"));
+    }
+
     private void createTransferTable() {
         hideTables();
         tableTransfer.setVisible(true);
@@ -139,6 +154,7 @@ public class ControllerList {
                 break;
             }
             case 2: {
+                createStaffTable();
                 addButton.setText("ДОБАВИТЬ ОТВЕТСТВЕННОЕ ЛИЦО");
                 break;
             }
@@ -147,8 +163,6 @@ public class ControllerList {
                 addButton.setText("ДОБАВИТЬ ПЕРЕДАЧУ");
                 break;
             }
-            default:
-                return;
         }
     }
 
@@ -178,6 +192,18 @@ public class ControllerList {
                 subdivision = null;
                 break;
             }
+            case 2: {
+                Staff temp = ControllerAddEditWindowStaff.getStaff();
+                if (checkAdd) {
+                    dataBase.addStaff(temp);
+                } else {
+                    dataBase.editStaff(staff, temp);
+                }
+                ObservableList<Staff> tempList = FXCollections.observableArrayList(dataBase.getStaff());
+                tableStaff.setItems(tempList);
+                transfer = null;
+                break;
+            }
             case 3: {
                 Transfer temp = ControllerAddEditWindowTransfer.getTransfer();
                 if (checkAdd) {
@@ -190,8 +216,6 @@ public class ControllerList {
                 transfer = null;
                 break;
             }
-            default:
-                return;
         }
     }
 
@@ -208,6 +232,12 @@ public class ControllerList {
                 if (!checkAdd) subdivision = tableSubdivisions.getSelectionModel().getSelectedItem();
                 if (subdivision == null && !checkAdd) return;
                 root = FXMLLoader.load(Main.class.getResource("view/addEditWindowSubdivision.fxml"));
+                break;
+            }
+            case 2: {
+                if (!checkAdd) staff = tableStaff.getSelectionModel().getSelectedItem();
+                if (staff == null && !checkAdd) return;
+                root = FXMLLoader.load(Main.class.getResource("view/addEditWindowStaff.fxml"));
                 break;
             }
             case 3: {
@@ -246,6 +276,14 @@ public class ControllerList {
                 dataBase.deleteSubdivisions(tableSubdivisions.getSelectionModel().getSelectedItem());
                 ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
                 tableSubdivisions.setItems(temp);
+                break;
+            }
+            case 2: {
+                if (tableStaff.getSelectionModel().getSelectedItem() == null) return;
+                dataBase.deleteStaff(tableStaff.getSelectionModel().getSelectedItem());
+                ObservableList<Staff> temp = FXCollections.observableArrayList(dataBase.getStaff());
+                tableStaff.setItems(temp);
+                break;
             }
             case 3: {
                 if (tableTransfer.getSelectionModel().getSelectedItem() == null) return;
