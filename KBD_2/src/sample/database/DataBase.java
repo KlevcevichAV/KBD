@@ -34,8 +34,8 @@ public class DataBase {
     private String whereTechnics(Technics technics) {
         String result = Constant.WHERE +
                 Constant.INVENTORY_NUMBER + Constant.EQUAL + technics.getInventoryNumber() + Constant.AND +
-                Constant.NAME + Constant.EQUAL + technics.getName() + Constant.AND +
-                Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(technics.getDay(), technics.getMonth(), technics.getYear()) + Constant.AND +
+                Constant.NAME + Constant.EQUAL + addAp(technics.getName()) + Constant.AND +
+                Constant.DATE_OF_PURCHASE + Constant.EQUAL + addAp(Constant.intToDate(technics.getDay(), technics.getMonth(), technics.getYear())) + Constant.AND +
                 Constant.PRICE + Constant.EQUAL + technics.getPrice();
         return result;
     }
@@ -130,12 +130,13 @@ public class DataBase {
     public void addTechnics(Technics added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.TECHNICS + Constant.VALUES_TECHNICS +
+            String eq = Constant.INSERT + Constant.TECHNICS + Constant.VALUES_TECHNICS +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     added.getInventoryNumber() + Constant.COMMA +
-                    added.getName() + Constant.COMMA +
-                    Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
-                    added.getPrice() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+                    addAp(added.getName()) + Constant.COMMA +
+                    addAp(Constant.intToDate(added.getDay(), added.getMonth(), added.getYear())) + Constant.COMMA +
+                    added.getPrice() + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+            statement.executeUpdate(eq);
             technics.add(added);
             System.out.println("We're added.");
         }
@@ -187,7 +188,13 @@ public class DataBase {
     public void deleteTechnics(Technics deleted) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.DELETE + Constant.TECHNICS + whereTechnics(deleted) + Constant.SEMICOLON);
+            String eq = Constant.DELETE + Constant.TECHNICS + whereTechnics(deleted) + Constant.SEMICOLON;
+            statement.executeUpdate(eq);
+            for(int i = 0; i < technics.size(); i++){
+                if(technics.get(i) == deleted){
+                    technics.remove(i);
+                }
+            }
         }
     }
 
@@ -222,10 +229,15 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.UPDATE + Constant.TECHNICS + Constant.SET +
                     Constant.INVENTORY_NUMBER + Constant.EQUAL + newTechnics.getInventoryNumber() + Constant.COMMA +
-                    Constant.NAME + Constant.EQUAL + newTechnics.getName() + Constant.COMMA +
-                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + Constant.intToDate(newTechnics.getDay(), newTechnics.getMonth(), newTechnics.getYear()) + Constant.COMMA +
+                    Constant.NAME + Constant.EQUAL + addAp(newTechnics.getName()) + Constant.COMMA +
+                    Constant.DATE_OF_PURCHASE + Constant.EQUAL + addAp(Constant.intToDate(newTechnics.getDay(), newTechnics.getMonth(), newTechnics.getYear())) + Constant.COMMA +
                     Constant.PRICE + Constant.EQUAL + newTechnics.getPrice() + whereTechnics(edited) + Constant.SEMICOLON
             );
+            for(int i = 0; i < subdivisions.size(); i++){
+                if(technics.get(i) == edited){
+                    technics.set(i, newTechnics);
+                }
+            }
         }
     }
 
@@ -251,6 +263,7 @@ public class DataBase {
             for(int i = 0; i < subdivisions.size(); i++){
                 if(subdivisions.get(i) == edited){
                     subdivisions.set(i, newSubdivision);
+                    break;
                 }
             }
         }

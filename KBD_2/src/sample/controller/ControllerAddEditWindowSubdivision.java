@@ -1,11 +1,12 @@
 package sample.controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.database.Subdivision;
 
-public class ControllerAddEditWindowSubdivision{
+public class ControllerAddEditWindowSubdivision {
 
     public static boolean result = false;
 
@@ -30,7 +31,7 @@ public class ControllerAddEditWindowSubdivision{
     @FXML
     private Button cancelButton;
 
-    private void setTextInField(){
+    private void setTextInField() {
         Subdivision temp = ControllerList.subdivision;
         numberField.setText(temp.getNumber() + "");
         fullNameField.setText(temp.getFullName());
@@ -38,17 +39,15 @@ public class ControllerAddEditWindowSubdivision{
     }
 
     @FXML
-    void initialize(){
-        if(ControllerList.subdivision != null){
+    void initialize() {
+        if (ControllerList.subdivision != null) {
             setTextInField();
         }
 
         cancelButton.setOnAction(event -> {
-            cancelButton.setOnAction(e->{
-                result = false;
-                Stage stage = (Stage) cancelButton.getScene().getWindow();
-                stage.close();
-            });
+            result = false;
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
         });
 
         decisionButton.setOnAction(event -> {

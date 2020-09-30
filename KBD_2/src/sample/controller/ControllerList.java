@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -20,8 +17,9 @@ import sample.database.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ControllerList {
+//add exceptions
 
+public class ControllerList {
     private DataBase dataBase;
     public static Technics technics;
     public static Subdivision subdivision;
@@ -107,53 +105,116 @@ public class ControllerList {
         tableTransfer.setVisible(false);
     }
 
-    private int setInterface() {
-        int pointer;
+    private void setInterface() {
         switch (Controller.getPointerInterface()) {
             case 0: {
-                pointer = 0;
                 createTechnicTable();
                 addButton.setText("ДОБАВИТЬ ТЕХНИКУ");
                 break;
             }
             case 1: {
-                pointer = 1;
                 createSubdivisionTable();
                 addButton.setText("ДОБАВИТЬ ПОДРАЗДЕЛЕНИЕ");
                 break;
             }
             case 2: {
-                pointer = 2;
                 addButton.setText("ДОБАВИТЬ ОТВЕТСТВЕННОЕ ЛИЦО");
                 break;
             }
             case 3: {
-                pointer = 3;
                 addButton.setText("ДОБАВИТЬ ПЕРЕДАЧУ");
                 break;
             }
             default:
-                return -1;
+                return;
         }
-        return pointer;
     }
 
-    private void createDialogWindow() throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("view/addEditWindowSubdivision.fxml"));
+    private void setChange(boolean checkAdd) throws SQLException {
+        switch (Controller.getPointerInterface()) {
+            case 0: {
+                Technics temp = ControllerAddEditWindowTechnics.getTechnics();
+                if (checkAdd) {
+                    dataBase.addTechnics(temp);
+                } else {
+                    dataBase.editTechnics(technics, temp);
+                }
+                ObservableList<Technics> tempList = FXCollections.observableArrayList(dataBase.getTechnics());
+                tableTechnics.setItems(tempList);
+                technics = null;
+                break;
+            }
+            case 1: {
+                Subdivision temp = ControllerAddEditWindowSubdivision.getSubdivision();
+                if (checkAdd) {
+                    dataBase.addSubdivisions(temp);
+                } else {
+                    dataBase.editSubdivisions(subdivision, temp);
+                }
+                ObservableList<Subdivision> tempList = FXCollections.observableArrayList(dataBase.getSubdivisions());
+                tableSubdivisions.setItems(tempList);
+                subdivision = null;
+                break;
+            }
+            default:
+                return;
+        }
+    }
+
+    private void createDialogWindow(boolean checkAdd) throws IOException, SQLException {
+        Parent root;
+        switch (Controller.getPointerInterface()) {
+            case 0: {
+                if (!checkAdd) technics = tableTechnics.getSelectionModel().getSelectedItem();
+                if (technics == null && !checkAdd) return;
+                root = FXMLLoader.load(Main.class.getResource("view/addEditWindowTechnics.fxml"));
+                break;
+            }
+            case 1: {
+                if (!checkAdd) subdivision = tableSubdivisions.getSelectionModel().getSelectedItem();
+                if (subdivision == null && !checkAdd) return;
+                root = FXMLLoader.load(Main.class.getResource("view/addEditWindowSubdivision.fxml"));
+                break;
+            }
+            default:
+                return;
+        }
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Edit Person");
+        if (checkAdd) {
+            dialogStage.setTitle("Add");
+        } else {
+            dialogStage.setTitle("Edit");
+        }
         dialogStage.initModality(Modality.WINDOW_MODAL);
-//        dialogStage.initOwner(primaryStage);
-        Scene scene = new Scene(root, 350, 350);
+        Scene scene = new Scene(root, 600, 500);
         dialogStage.setScene(scene);
         dialogStage.showAndWait();
+        setChange(checkAdd);
+    }
+
+    private void delete() throws SQLException {
+        switch (Controller.getPointerInterface()) {
+            case 0: {
+                if (tableTechnics.getSelectionModel().getSelectedItem() == null) return;
+                dataBase.deleteTechnics(tableTechnics.getSelectionModel().getSelectedItem());
+                ObservableList<Technics> temp = FXCollections.observableArrayList(dataBase.getTechnics());
+                tableTechnics.setItems(temp);
+                break;
+            }
+            case 1: {
+                if (tableSubdivisions.getSelectionModel().getSelectedItem() == null) return;
+                dataBase.deleteSubdivisions(tableSubdivisions.getSelectionModel().getSelectedItem());
+                ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
+                tableSubdivisions.setItems(temp);
+            }
+        }
     }
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         hideTables();
         dataBase = new DataBase();
-        int pointerInterface = setInterface();
+        setInterface();
         menuButton.setOnAction(event -> {
             try {
                 Parent root = FXMLLoader.load(Main.class.getResource("view/sample.fxml"));
@@ -168,43 +229,26 @@ public class ControllerList {
         });
         addButton.setOnAction(event -> {
             try {
-                createDialogWindow();
-                if (ControllerAddEditWindowSubdivision.result) {
-                    dataBase.addSubdivisions(ControllerAddEditWindowSubdivision.getSubdivision());
-                    ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
-                    tableSubdivisions.setItems(temp);
-                }
-                technics = null;
+                createDialogWindow(true);
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         });
         editButton.setOnAction(event -> {
-            if (tableSubdivisions.getSelectionModel().getSelectedItem() != null) {
-                subdivision = tableSubdivisions.getSelectionModel().getSelectedItem();
-                try {
-                    createDialogWindow();
-                    if (ControllerAddEditWindowSubdivision.result) {
-                        dataBase.editSubdivisions(subdivision, ControllerAddEditWindowSubdivision.getSubdivision());
-                        ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
-                        tableSubdivisions.setItems(temp);
-                    }
-                    technics = null;
-                } catch (IOException | SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                createDialogWindow(false);
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
             }
+
         });
         deleteButton.setOnAction(event -> {
-            if(tableSubdivisions.getSelectionModel().getSelectedItem() != null){
-                try {
-                    dataBase.deleteSubdivisions(tableSubdivisions.getSelectionModel().getSelectedItem());
-                    ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
-                    tableSubdivisions.setItems(temp);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+            try {
+                delete();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
+
         });
 //        if(pointerInterface == -1) return;
     }

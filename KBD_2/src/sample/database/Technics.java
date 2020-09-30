@@ -14,7 +14,7 @@ public class Technics {
     }
 
     public String getName() {
-        return '\'' + name + '\'';
+        return name;
     }
 
     public int getDay() {
