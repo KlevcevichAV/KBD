@@ -6,6 +6,11 @@ public class Transfer {
     private int year;
     private String fullName;
     private int roomNumber;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
 
     public int getDay() {
         return day;
@@ -20,7 +25,7 @@ public class Transfer {
     }
 
     public String getFullName() {
-        return '\'' + fullName + '\'';
+        return fullName;
     }
 
     public int getRoomNumber() {
@@ -33,5 +38,6 @@ public class Transfer {
         this.year = year;
         this.fullName = fullName;
         this.roomNumber = roomNumber;
+        date = year + "-" + month + "-" + day;
     }
 }

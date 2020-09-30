@@ -42,8 +42,8 @@ public class DataBase {
 
     private String whereTransfers(Transfer Transfers) {
         String result = Constant.WHERE +
-                Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(Transfers.getDay(), Transfers.getMonth(), Transfers.getYear()) + Constant.AND +
-                Constant.FULL_NAME + Constant.EQUAL + Transfers.getFullName() + Constant.AND +
+                Constant.TRANSMISSION_DATE + Constant.EQUAL + addAp(Constant.intToDate(Transfers.getDay(), Transfers.getMonth(), Transfers.getYear())) + Constant.AND +
+                Constant.FULL_NAME + Constant.EQUAL + addAp(Transfers.getFullName()) + Constant.AND +
                 Constant.ROOM_NUMBER + Constant.EQUAL + Transfers.getRoomNumber();
         return result;
     }
@@ -145,10 +145,10 @@ public class DataBase {
     public void addTransfers(Transfer added) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.INSERT + Constant.STAFF + Constant.VALUES_STAFF +
+            statement.executeUpdate(Constant.INSERT + Constant.TRANSFER + Constant.VALUES_TRANSFER +
                     Constant.VALUES + Constant.LEFT_BRACKET +
-                    Constant.intToDate(added.getDay(), added.getMonth(), added.getYear()) + Constant.COMMA +
-                    added.getFullName() + Constant.COMMA +
+                    addAp(Constant.intToDate(added.getDay(), added.getMonth(), added.getYear())) + Constant.COMMA +
+                    addAp(added.getFullName()) + Constant.COMMA +
                     added.getRoomNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
             transfers.add(added);
             System.out.println("We're added.");
@@ -201,7 +201,12 @@ public class DataBase {
     public void deleteTransfers(Transfer deleted) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.DELETE + Constant.STAFF + whereTransfers(deleted) + Constant.SEMICOLON);
+            statement.executeUpdate(Constant.DELETE + Constant.TRANSFER + whereTransfers(deleted) + Constant.SEMICOLON);
+            for(int i = 0; i < transfers.size(); i++){
+                if(transfers.get(i) == deleted){
+                    transfers.remove(i);
+                }
+            }
         }
     }
 
@@ -244,11 +249,16 @@ public class DataBase {
     public void editTransfers(Transfer edited, Transfer newTransfer) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
-                    Constant.TRANSMISSION_DATE + Constant.EQUAL + Constant.intToDate(newTransfer.getDay(), newTransfer.getMonth(), newTransfer.getYear()) + Constant.COMMA +
-                    Constant.FULL_NAME + Constant.EQUAL + newTransfer.getFullName() + Constant.COMMA +
+            statement.executeUpdate(Constant.UPDATE + Constant.TRANSFER + Constant.SET +
+                    Constant.TRANSMISSION_DATE + Constant.EQUAL + addAp(Constant.intToDate(newTransfer.getDay(), newTransfer.getMonth(), newTransfer.getYear())) + Constant.COMMA +
+                    Constant.FULL_NAME + Constant.EQUAL + addAp(newTransfer.getFullName()) + Constant.COMMA +
                     Constant.ROOM_NUMBER + Constant.EQUAL + newTransfer.getRoomNumber() + whereTransfers(edited) + Constant.SEMICOLON
             );
+            for(int i = 0; i < transfers.size(); i++){
+                if(transfers.get(i) == edited){
+                    transfers.set(i, newTransfer);
+                }
+            }
         }
     }
 

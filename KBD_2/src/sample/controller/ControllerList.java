@@ -62,7 +62,16 @@ public class ControllerList {
     private TableView<?> tableStaff;
 
     @FXML
-    private TableView<?> tableTransfer;
+    private TableView<Transfer> tableTransfer;
+
+    @FXML
+    private TableColumn<Transfer, String> dateTransfer;
+
+    @FXML
+    private TableColumn<Transfer, String> fullNameTransfer;
+
+    @FXML
+    private TableColumn<Transfer, Integer> roomNumberTransfer;
 
     @FXML
     private Button addButton;
@@ -89,6 +98,7 @@ public class ControllerList {
     }
 
     private void createSubdivisionTable() {
+        hideTables();
         tableSubdivisions.setVisible(true);
         System.out.println(dataBase.getSubdivisions().size());
         ObservableList<Subdivision> test = FXCollections.observableArrayList(dataBase.getSubdivisions());
@@ -96,6 +106,17 @@ public class ControllerList {
         number.setCellValueFactory(new PropertyValueFactory<Subdivision, Integer>("number"));
         fullName.setCellValueFactory(new PropertyValueFactory<Subdivision, String>("fullName"));
         shortName.setCellValueFactory(new PropertyValueFactory<Subdivision, String>("shortName"));
+    }
+
+    private void createTransferTable() {
+        hideTables();
+        tableTransfer.setVisible(true);
+        System.out.println(dataBase.getSubdivisions().size());
+        ObservableList<Transfer> test = FXCollections.observableArrayList(dataBase.getTransfers());
+        tableTransfer.setItems(test);
+        dateTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, String>("date"));
+        fullNameTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, String>("fullName"));
+        roomNumberTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, Integer>("roomNumber"));
     }
 
     private void hideTables() {
@@ -122,6 +143,7 @@ public class ControllerList {
                 break;
             }
             case 3: {
+                createTransferTable();
                 addButton.setText("ДОБАВИТЬ ПЕРЕДАЧУ");
                 break;
             }
@@ -156,6 +178,18 @@ public class ControllerList {
                 subdivision = null;
                 break;
             }
+            case 3: {
+                Transfer temp = ControllerAddEditWindowTransfer.getTransfer();
+                if (checkAdd) {
+                    dataBase.addTransfers(temp);
+                } else {
+                    dataBase.editTransfers(transfer, temp);
+                }
+                ObservableList<Transfer> tempList = FXCollections.observableArrayList(dataBase.getTransfers());
+                tableTransfer.setItems(tempList);
+                transfer = null;
+                break;
+            }
             default:
                 return;
         }
@@ -174,6 +208,12 @@ public class ControllerList {
                 if (!checkAdd) subdivision = tableSubdivisions.getSelectionModel().getSelectedItem();
                 if (subdivision == null && !checkAdd) return;
                 root = FXMLLoader.load(Main.class.getResource("view/addEditWindowSubdivision.fxml"));
+                break;
+            }
+            case 3: {
+                if (!checkAdd) transfer = tableTransfer.getSelectionModel().getSelectedItem();
+                if (transfer == null && !checkAdd) return;
+                root = FXMLLoader.load(Main.class.getResource("view/addEditWindowTransfer.fxml"));
                 break;
             }
             default:
@@ -206,6 +246,12 @@ public class ControllerList {
                 dataBase.deleteSubdivisions(tableSubdivisions.getSelectionModel().getSelectedItem());
                 ObservableList<Subdivision> temp = FXCollections.observableArrayList(dataBase.getSubdivisions());
                 tableSubdivisions.setItems(temp);
+            }
+            case 3: {
+                if (tableTransfer.getSelectionModel().getSelectedItem() == null) return;
+                dataBase.deleteTransfers(tableTransfer.getSelectionModel().getSelectedItem());
+                ObservableList<Transfer> temp = FXCollections.observableArrayList(dataBase.getTransfers());
+                tableTransfer.setItems(temp);
             }
         }
     }

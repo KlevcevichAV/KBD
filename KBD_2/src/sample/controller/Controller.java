@@ -45,6 +45,19 @@ public class Controller {
                 e.printStackTrace();
             }
         });
+
+        transfer.setOnAction(event -> {
+            try {
+                pointerInterface = 3;
+                Parent root = FXMLLoader.load(Main.class.getResource("view/list.fxml"));
+                Stage stage = (Stage) subdivisions.getScene().getWindow();
+                stage.setTitle("Transfer");
+                stage.setScene(new Scene(root, 650, 350));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         technics.setOnAction(event -> {
             try {
                 pointerInterface = 0;

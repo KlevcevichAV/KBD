@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowTransfer">
+   <center>
+      <HBox prefHeight="400.0" prefWidth="478.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="400.0" prefWidth="506.0" spacing="13.0">
+               <children>
+                  <Label prefHeight="26.0" text="День приобретения" />
+                  <Label prefHeight="26.0" text="Месяц приобретения" />
+                  <Label prefHeight="26.0" text="Год приобретения" />
+                  <Label prefHeight="26.0" text="Полное название" />
+                  <Label text="Номер помещения" />
+               </children>
+               <padding>
+                  <Insets left="25.0" top="20.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="400.0" prefWidth="500.0" spacing="13.0">
+               <children>
+                  <TextField fx:id="dayField" />
+                  <TextField fx:id="monthField" />
+                  <TextField fx:id="yearField" />
+                  <TextField fx:id="fullName" />
+                  <TextField fx:id="roomNumber" />
+               </children>
+               <padding>
+                  <Insets right="25.0" top="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefHeight="0.0" prefWidth="372.0" style="visibility: false;" />
+            <Button fx:id="decisionButton" mnemonicParsing="false" text="Button" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+         </children>
+         <padding>
+            <Insets top="60.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>
