@@ -1,6 +1,7 @@
 package sample.database;
 //start debug :)(
 
+import javax.naming.CompositeName;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,13 @@ public class DataBase {
     private List<Transfer> transfers;
     private List<Subdivision> subdivisions;
     private List<Staff> staff;
+
+    public String eqSearchTechnicsSub(int number, String date) {
+        String result = Constant.SELECT_LIST_TECHNICS_SUBDIVISION + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
+                Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
+                whereTechnicsSubdivision(number, date) + Constant.SEMICOLON;
+        return result;
+    }
 
     public List<Technics> getTechnics() {
         return technics;
@@ -44,7 +52,8 @@ public class DataBase {
         String result = Constant.WHERE +
                 Constant.TRANSMISSION_DATE + Constant.EQUAL + addAp(Constant.intToDate(Transfers.getDay(), Transfers.getMonth(), Transfers.getYear())) + Constant.AND +
                 Constant.FULL_NAME + Constant.EQUAL + addAp(Transfers.getFullName()) + Constant.AND +
-                Constant.ROOM_NUMBER + Constant.EQUAL + Transfers.getRoomNumber();
+                Constant.ROOM_NUMBER + Constant.EQUAL + Transfers.getRoomNumber() + Constant.AND +
+                Constant.INVENTORY_NUMBER + Constant.EQUAL + Transfers.getInventoryNumber();
         return result;
     }
 
@@ -59,7 +68,15 @@ public class DataBase {
     private String whereStaff(Staff staff) {
         String result = Constant.WHERE +
                 Constant.FULL_NAME + Constant.EQUAL + addAp(staff.getFullName()) + Constant.AND +
-                Constant.POSITION + Constant.EQUAL + addAp(staff.getPosition());
+                Constant.POSITION + Constant.EQUAL + addAp(staff.getPosition()) + Constant.AND +
+                Constant.SUBDIVISION_NAME + Constant.EQUAL + addAp(staff.getSubdivisionName());
+        return result;
+    }
+
+    private String whereTechnicsSubdivision(int numberSub, String date) {
+        String result = Constant.WHERE +
+                Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub + Constant.AND +
+                Constant.DATE_TRANSFER + Constant.EQUAL + addAp(date);
         return result;
     }
 
@@ -93,7 +110,11 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_TRANSFER);
             while (resultSet.next()) {
-                transfers.add(new Transfer(Integer.parseInt(resultSet.getString(1)), Integer.parseInt(resultSet.getString(2)), Integer.parseInt(resultSet.getString(3)), resultSet.getString(4), Integer.parseInt(resultSet.getString(5))));
+                transfers.add(new Transfer(Integer.parseInt(resultSet.getString(1)),
+                        Integer.parseInt(resultSet.getString(2)),
+                        Integer.parseInt(resultSet.getString(3)),
+                        resultSet.getString(4),
+                        Integer.parseInt(resultSet.getString(5)), Integer.parseInt(resultSet.getString(6))));
             }
             System.out.println("We're created location Of Technicss.");
         }
@@ -121,7 +142,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_STAFF);
             while (resultSet.next()) {
-                staff.add(new Staff(resultSet.getString(1), resultSet.getString(2)));
+                staff.add(new Staff(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3)));
             }
             System.out.println("We're created subdivisions.");
         }
@@ -149,7 +170,8 @@ public class DataBase {
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     addAp(Constant.intToDate(added.getDay(), added.getMonth(), added.getYear())) + Constant.COMMA +
                     addAp(added.getFullName()) + Constant.COMMA +
-                    added.getRoomNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
+                    added.getRoomNumber() + Constant.COMMA +
+                    added.getInventoryNumber() + Constant.RIGHT_BRACKET + Constant.SEMICOLON);
             transfers.add(added);
             System.out.println("We're added.");
         }
@@ -179,7 +201,8 @@ public class DataBase {
             String eq = Constant.INSERT + Constant.STAFF + Constant.VALUES_STAFF +
                     Constant.VALUES + Constant.LEFT_BRACKET +
                     addAp(added.getFullName()) + Constant.COMMA +
-                    addAp(added.getPosition()) + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+                    addAp(added.getPosition()) + Constant.COMMA +
+                    addAp(added.getSubdivisionName()) + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
             statement.executeUpdate(eq);
             staff.add(added);
             System.out.println("We're added.");
@@ -191,8 +214,8 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             String eq = Constant.DELETE + Constant.TECHNICS + whereTechnics(deleted) + Constant.SEMICOLON;
             statement.executeUpdate(eq);
-            for(int i = 0; i < technics.size(); i++){
-                if(technics.get(i) == deleted){
+            for (int i = 0; i < technics.size(); i++) {
+                if (technics.get(i) == deleted) {
                     technics.remove(i);
                 }
             }
@@ -203,8 +226,8 @@ public class DataBase {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.DELETE + Constant.TRANSFER + whereTransfers(deleted) + Constant.SEMICOLON);
-            for(int i = 0; i < transfers.size(); i++){
-                if(transfers.get(i) == deleted){
+            for (int i = 0; i < transfers.size(); i++) {
+                if (transfers.get(i) == deleted) {
                     transfers.remove(i);
                 }
             }
@@ -215,8 +238,8 @@ public class DataBase {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.DELETE + Constant.SUBDIVISION + whereSubdivisions(deleted) + Constant.SEMICOLON);
-            for(int i = 0; i < subdivisions.size(); i++){
-                if(subdivisions.get(i) == deleted){
+            for (int i = 0; i < subdivisions.size(); i++) {
+                if (subdivisions.get(i) == deleted) {
                     subdivisions.remove(i);
                 }
             }
@@ -227,8 +250,8 @@ public class DataBase {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.DELETE + Constant.STAFF + whereStaff(deleted) + Constant.SEMICOLON);
-            for(int i = 0; i < staff.size(); i++){
-                if(staff.get(i) == deleted){
+            for (int i = 0; i < staff.size(); i++) {
+                if (staff.get(i) == deleted) {
                     staff.remove(i);
                 }
             }
@@ -244,8 +267,8 @@ public class DataBase {
                     Constant.DATE_OF_PURCHASE + Constant.EQUAL + addAp(Constant.intToDate(newTechnics.getDay(), newTechnics.getMonth(), newTechnics.getYear())) + Constant.COMMA +
                     Constant.PRICE + Constant.EQUAL + newTechnics.getPrice() + whereTechnics(edited) + Constant.SEMICOLON
             );
-            for(int i = 0; i < subdivisions.size(); i++){
-                if(technics.get(i) == edited){
+            for (int i = 0; i < subdivisions.size(); i++) {
+                if (technics.get(i) == edited) {
                     technics.set(i, newTechnics);
                     break;
                 }
@@ -256,13 +279,15 @@ public class DataBase {
     public void editTransfers(Transfer edited, Transfer newTransfer) throws SQLException {
         Connection connection = DriverManager.getConnection(url, p);
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
+            String eq = Constant.UPDATE + Constant.TRANSFER + Constant.SET +
                     Constant.TRANSMISSION_DATE + Constant.EQUAL + addAp(Constant.intToDate(newTransfer.getDay(), newTransfer.getMonth(), newTransfer.getYear())) + Constant.COMMA +
                     Constant.FULL_NAME + Constant.EQUAL + addAp(newTransfer.getFullName()) + Constant.COMMA +
-                    Constant.ROOM_NUMBER + Constant.EQUAL + newTransfer.getRoomNumber() + whereTransfers(edited) + Constant.SEMICOLON
-            );
-            for(int i = 0; i < transfers.size(); i++){
-                if(transfers.get(i) == edited){
+                    Constant.ROOM_NUMBER + Constant.EQUAL + newTransfer.getRoomNumber() + Constant.COMMA +
+                    Constant.INVENTORY_NUMBER + Constant.EQUAL + newTransfer.getInventoryNumber() + whereTransfers(edited) + Constant.SEMICOLON;
+
+            statement.executeUpdate(eq);
+            for (int i = 0; i < transfers.size(); i++) {
+                if (transfers.get(i) == edited) {
                     transfers.set(i, newTransfer);
                     break;
                 }
@@ -278,8 +303,8 @@ public class DataBase {
                     Constant.FULL_NAME + Constant.EQUAL + addAp(newSubdivision.getFullName()) + Constant.COMMA +
                     Constant.SHORT_NAME + Constant.EQUAL + addAp(newSubdivision.getShortName()) + whereSubdivisions(edited) + Constant.SEMICOLON;
             statement.executeUpdate(eq);
-            for(int i = 0; i < subdivisions.size(); i++){
-                if(subdivisions.get(i) == edited){
+            for (int i = 0; i < subdivisions.size(); i++) {
+                if (subdivisions.get(i) == edited) {
                     subdivisions.set(i, newSubdivision);
                     break;
                 }
@@ -292,15 +317,31 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(Constant.UPDATE + Constant.STAFF + Constant.SET +
                     Constant.FULL_NAME + Constant.EQUAL + addAp(newStaff.getFullName()) + Constant.COMMA +
-                    Constant.POSITION + Constant.EQUAL + addAp(newStaff.getPosition()) + whereStaff(edited) + Constant.SEMICOLON
+                    Constant.POSITION + Constant.EQUAL + addAp(newStaff.getPosition()) + Constant.COMMA +
+                    Constant.SUBDIVISION_NAME + Constant.EQUAL + addAp(newStaff.getSubdivisionName()) + whereStaff(edited) + Constant.SEMICOLON
             );
-            for(int i = 0; i < staff.size(); i++){
-                if(staff.get(i) == edited){
+            for (int i = 0; i < staff.size(); i++) {
+                if (staff.get(i) == edited) {
                     staff.set(i, newStaff);
                     break;
                 }
             }
         }
+    }
+
+    public List<Technics> searchTechnicsSubdivision(int number, String date) throws SQLException, ClassNotFoundException {
+        ArrayList<Technics> result = new ArrayList<>();
+        Class.forName("com.mysql.jdbc.Driver");
+        settingProperties();
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(eqSearchTechnicsSub(number, date));
+            while (resultSet.next()) {
+                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0));
+            }
+            System.out.println("We're created Technics.");
+        }
+        return result;
     }
 
     public DataBase() throws ClassNotFoundException, SQLException {

@@ -24,6 +24,9 @@ public class ControllerAddEditWindowStaff {
     private TextField position;
 
     @FXML
+    private TextField subdivisionField;
+
+    @FXML
     private Button decisionButton;
 
     @FXML
@@ -33,6 +36,7 @@ public class ControllerAddEditWindowStaff {
         Staff temp = ControllerList.staff;
         fullName.setText(temp.getFullName());
         position.setText(temp.getPosition());
+        subdivisionField.setText(temp.getSubdivisionName());
     }
 
     @FXML
@@ -49,7 +53,7 @@ public class ControllerAddEditWindowStaff {
 
         decisionButton.setOnAction(event -> {
             result = true;
-            staff = new Staff(fullName.getText(), position.getText());
+            staff = new Staff(fullName.getText(), position.getText(), subdivisionField.getText());
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         });

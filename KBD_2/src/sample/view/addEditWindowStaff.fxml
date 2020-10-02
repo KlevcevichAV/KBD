@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="162.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowStaff">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerAddEditWindowStaff">
    <center>
       <HBox prefHeight="400.0" prefWidth="478.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,6 +17,7 @@
                <children>
                   <Label prefHeight="26.0" text="Полное имя" />
                   <Label prefHeight="26.0" text="Должность" />
+                  <Label text="Подразделение" />
                </children>
                <padding>
                   <Insets left="25.0" top="20.0" />
@@ -26,6 +27,7 @@
                <children>
                   <TextField fx:id="fullName" />
                   <TextField fx:id="position" />
+                  <TextField fx:id="subdivisionField" />
                </children>
                <padding>
                   <Insets right="25.0" top="20.0" />
@@ -35,14 +37,14 @@
       </HBox>
    </center>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="55.0" prefWidth="600.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
             <Separator prefHeight="0.0" prefWidth="372.0" style="visibility: false;" />
             <Button fx:id="decisionButton" mnemonicParsing="false" text="Button" />
             <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
          </children>
          <padding>
-            <Insets top="60.0" />
+            <Insets top="10.0" />
          </padding>
       </HBox>
    </bottom>

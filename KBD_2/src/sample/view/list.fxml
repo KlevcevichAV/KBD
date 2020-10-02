@@ -59,6 +59,7 @@
                <columns>
                   <TableColumn fx:id="fullNameStaff" prefWidth="75.0" text="Full name" />
                   <TableColumn fx:id="positionStaff" prefWidth="75.0" text="Position" />
+                  <TableColumn fx:id="subdivisionName" prefWidth="75.0" text="Subdivision" />
                </columns></TableView>
             <TableView fx:id="tableTransfer" prefHeight="200.0" prefWidth="200.0">
                <columns>

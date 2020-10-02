@@ -32,6 +32,9 @@ public class ControllerAddEditWindowTransfer {
     private TextField roomNumber;
 
     @FXML
+    private TextField inventoryNumber;
+
+    @FXML
     private Button decisionButton;
 
     @FXML
@@ -44,6 +47,7 @@ public class ControllerAddEditWindowTransfer {
         yearField.setText(temp.getYear() + "");
         fullName.setText(temp.getFullName());
         roomNumber.setText(temp.getRoomNumber() + "");
+        inventoryNumber.setText(temp.getInventoryNumber() + "");
     }
 
     @FXML
@@ -61,7 +65,7 @@ public class ControllerAddEditWindowTransfer {
 
         decisionButton.setOnAction(event -> {
             result = true;
-            transfer = new Transfer(Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), fullName.getText(), Integer.parseInt(roomNumber.getText()));
+            transfer = new Transfer(Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), fullName.getText(), Integer.parseInt(roomNumber.getText()), Integer.parseInt(inventoryNumber.getText()));
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         });

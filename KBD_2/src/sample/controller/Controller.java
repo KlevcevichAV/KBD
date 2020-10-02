@@ -7,14 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import sample.Main;
+import sample.database.DataBase;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Controller {
     private static int pointerInterface;
-
+    private static DataBase dataBase;
     public static int getPointerInterface() {
         return pointerInterface;
+    }
+
+    public static DataBase getDataBase(){
+        return dataBase;
     }
 
     @FXML
@@ -33,7 +39,8 @@ public class Controller {
     private Button search;
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException, ClassNotFoundException {
+        dataBase = new DataBase();
         subdivisions.setOnAction(event -> {
             try {
                 pointerInterface = 1;

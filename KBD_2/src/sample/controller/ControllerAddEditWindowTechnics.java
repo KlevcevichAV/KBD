@@ -64,7 +64,6 @@ public class ControllerAddEditWindowTechnics {
             result = false;
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-
         });
 
         decisionButton.setOnAction(event -> {

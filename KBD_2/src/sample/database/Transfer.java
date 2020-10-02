@@ -7,6 +7,7 @@ public class Transfer {
     private String fullName;
     private int roomNumber;
     private String date;
+    private int inventoryNumber;
 
     public String getDate() {
         return date;
@@ -32,12 +33,17 @@ public class Transfer {
         return roomNumber;
     }
 
-    public Transfer(int day, int month, int year, String fullName, int roomNumber) {
+    public int getInventoryNumber() {
+        return inventoryNumber;
+    }
+
+    public Transfer(int day, int month, int year, String fullName, int roomNumber, int inventoryNumber) {
         this.day = day;
         this.month = month;
         this.year = year;
         this.fullName = fullName;
         this.roomNumber = roomNumber;
+        this.inventoryNumber = inventoryNumber;
         date = year + "-" + month + "-" + day;
     }
 }

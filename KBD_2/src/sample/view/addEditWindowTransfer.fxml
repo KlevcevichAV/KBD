@@ -20,6 +20,7 @@
                   <Label prefHeight="26.0" text="Год приобретения" />
                   <Label prefHeight="26.0" text="Полное название" />
                   <Label text="Номер помещения" />
+                  <Label prefHeight="48.0" prefWidth="141.0" text="Инвентарный номер" />
                </children>
                <padding>
                   <Insets left="25.0" top="20.0" />
@@ -32,6 +33,7 @@
                   <TextField fx:id="yearField" />
                   <TextField fx:id="fullName" />
                   <TextField fx:id="roomNumber" />
+                  <TextField fx:id="inventoryNumber" />
                </children>
                <padding>
                   <Insets right="25.0" top="20.0" />

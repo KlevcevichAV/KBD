@@ -57,6 +57,8 @@ public class ControllerList {
 
     @FXML
     private TableColumn<Subdivision, String> shortName;
+    @FXML
+    private TableColumn<Staff, String> subdivisionName;
 
     @FXML
     private TableView<Staff> tableStaff;
@@ -121,6 +123,7 @@ public class ControllerList {
         tableStaff.setItems(test);
         fullNameStaff.setCellValueFactory(new PropertyValueFactory<Staff, String>("fullName"));
         positionStaff.setCellValueFactory(new PropertyValueFactory<Staff, String>("position"));
+        subdivisionName.setCellValueFactory(new PropertyValueFactory<Staff, String>("subdivisionName"));
     }
 
     private void createTransferTable() {
@@ -297,7 +300,8 @@ public class ControllerList {
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
         hideTables();
-        dataBase = new DataBase();
+//        dataBase = new DataBase();
+        dataBase = Controller.getDataBase();
         setInterface();
         menuButton.setOnAction(event -> {
             try {

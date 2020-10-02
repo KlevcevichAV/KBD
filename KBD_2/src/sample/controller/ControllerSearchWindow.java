@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
 
@@ -33,6 +34,18 @@ public class ControllerSearchWindow {
                 stage.setTitle("Test");
                 stage.setScene(new Scene(root, 600, 350));
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        listTechnicSubdivision.setOnAction(event -> {
+            try {
+                Parent root = FXMLLoader.load(Main.class.getResource("view/searchListTechnicSubdivision.fxml"));
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Scene scene = new Scene(root, 600, 500);
+                dialogStage.setScene(scene);
+                dialogStage.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
             }
