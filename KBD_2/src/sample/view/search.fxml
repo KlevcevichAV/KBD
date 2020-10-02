@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerSearchWindow">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="listTechnicSubdivision" mnemonicParsing="false" prefHeight="150.0" prefWidth="187.0" text="Список средств ВТ и оргтехники, закрепленной за данным подразделением в данный момент времени" wrapText="true" />
+            <Button fx:id="listRoom" mnemonicParsing="false" prefHeight="150.0" prefWidth="222.0" text="Список всех помещений подразделения в настоящий момент времени" wrapText="true" />
+            <Button fx:id="listTechnicPerson" mnemonicParsing="false" prefHeight="150.0" prefWidth="222.0" text="Список техники закрепленной за материально ответственным в настоящий момент времени" wrapText="true" />
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="50.0" />
+         </padding>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="62.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Separator prefHeight="8.0" prefWidth="530.0" style="visibility: false;" />
+            <Button fx:id="menu" mnemonicParsing="false" text="Меню" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>

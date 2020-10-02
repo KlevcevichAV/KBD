@@ -81,6 +81,17 @@ public class Controller {
                 e.printStackTrace();
             }
         });
+
+        search.setOnAction(event -> {
+            try {
+                Parent root = FXMLLoader.load(Main.class.getResource("view/search.fxml"));
+                Stage stage = (Stage) search.getScene().getWindow();
+                stage.setTitle("Search");
+                stage.setScene(new Scene(root, 600, 238));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }
