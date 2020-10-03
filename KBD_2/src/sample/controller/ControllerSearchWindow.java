@@ -50,5 +50,17 @@ public class ControllerSearchWindow {
                 e.printStackTrace();
             }
         });
+        listRoom.setOnAction(event -> {
+            try {
+                Parent root = FXMLLoader.load(Main.class.getResource("view/searchListRoom.fxml"));
+                Stage dialogStage = new Stage();
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+                Scene scene = new Scene(root, 600, 500);
+                dialogStage.setScene(scene);
+                dialogStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

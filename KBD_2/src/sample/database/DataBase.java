@@ -23,6 +23,13 @@ public class DataBase {
         return result;
     }
 
+    public String eqSearchNumberRoom(int number) {
+        String result = Constant.SELECT_LIST_LIST_ROOM + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
+                Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
+                whereRoomNumber(number) + Constant.SEMICOLON;
+        return result;
+    }
+
     public List<Technics> getTechnics() {
         return technics;
     }
@@ -77,6 +84,12 @@ public class DataBase {
         String result = Constant.WHERE +
                 Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub + Constant.AND +
                 Constant.DATE_TRANSFER + Constant.EQUAL + addAp(date);
+        return result;
+    }
+
+    private String whereRoomNumber(int numberSub) {
+        String result = Constant.WHERE +
+                Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub;
         return result;
     }
 
@@ -338,6 +351,21 @@ public class DataBase {
             ResultSet resultSet = statement.executeQuery(eqSearchTechnicsSub(number, date));
             while (resultSet.next()) {
                 result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0));
+            }
+            System.out.println("We're created Technics.");
+        }
+        return result;
+    }
+
+    public List<Transfer> searchNumberRoom(int number) throws SQLException, ClassNotFoundException {
+        ArrayList<Transfer> result = new ArrayList<>();
+        Class.forName("com.mysql.jdbc.Driver");
+        settingProperties();
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(eqSearchNumberRoom(number));
+            while (resultSet.next()) {
+                result.add(new Transfer(0, 0, 0, "0", Integer.parseInt(resultSet.getString(1)), 0));
             }
             System.out.println("We're created Technics.");
         }

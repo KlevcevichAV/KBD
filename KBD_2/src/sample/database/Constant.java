@@ -11,6 +11,7 @@ public class Constant {
     public static final String SELECT_SUBDIVISION = "SELECT number, full_name, short_name FROM subdivision";
     public static final String SELECT_STAFF = "SELECT * FROM staff";
     public static final String SELECT_LIST_TECHNICS_SUBDIVISION = "SELECT technics.inventory_number, technics.name FROM technics";
+    public static final String SELECT_LIST_LIST_ROOM = "SELECT transfer.room_number FROM technics";
 
     public static final String LEFT_JOIN = "LEFT JOIN ";
     public static final String ON = " ON ";
