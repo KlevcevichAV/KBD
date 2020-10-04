@@ -47,6 +47,9 @@ public class ControllerList {
     private TableColumn<Technics, Double> price;
 
     @FXML
+    private TableColumn<Technics, String> modelColumn;
+
+    @FXML
     private TableView<Subdivision> tableSubdivisions;
 
     @FXML
@@ -103,6 +106,7 @@ public class ControllerList {
         name.setCellValueFactory(new PropertyValueFactory<Technics, String>("name"));
         date.setCellValueFactory(new PropertyValueFactory<Technics, String>("date"));
         price.setCellValueFactory(new PropertyValueFactory<Technics, Double>("price"));
+        modelColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("model"));
     }
 
     private void createSubdivisionTable() {

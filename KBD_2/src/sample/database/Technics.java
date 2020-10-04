@@ -8,6 +8,7 @@ public class Technics {
     private int year;
     private String date;
     private double price;
+    private String model;
 
     public int getInventoryNumber() {
         return inventoryNumber;
@@ -37,13 +38,18 @@ public class Technics {
         return date;
     }
 
-    public Technics(int inventoryNumber, String name, int day, int month, int year, double price) {
+    public String getModel() {
+        return model;
+    }
+
+    public Technics(int inventoryNumber, String name, int day, int month, int year, double price, String model) {
         this.inventoryNumber = inventoryNumber;
         this.name = name;
         this.day = day;
         this.month = month;
         this.year = year;
         this.price = price;
+        this.model = model;
         date = year + "-" + month + "-" + day;
     }
 }

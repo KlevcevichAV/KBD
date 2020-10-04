@@ -6,11 +6,11 @@ public class Constant {
     public static final String SUBDIVISION = "subdivision";
     public static final String STAFF = "staff";
 
-    public static final String SELECT_TECHNICS = "SELECT inventory_number, name, day(date_of_purchase), month(date_of_purchase), year(date_of_purchase), price FROM technics";
+    public static final String SELECT_TECHNICS = "SELECT inventory_number, name, day(date_of_purchase), month(date_of_purchase), year(date_of_purchase), price, model FROM technics";
     public static final String SELECT_TRANSFER = "SELECT day(transmission_date), month(transmission_date), year(transmission_date), full_name, room_number, inventory_number FROM transfer";
     public static final String SELECT_SUBDIVISION = "SELECT number, full_name, short_name FROM subdivision";
     public static final String SELECT_STAFF = "SELECT * FROM staff";
-    public static final String SELECT_LIST_TECHNICS_SUBDIVISION = "SELECT technics.inventory_number, technics.name FROM technics";
+    public static final String SELECT_LIST_TECHNICS_SUBDIVISION = "SELECT technics.inventory_number, technics.name, technics.model FROM technics";
     public static final String SELECT_LIST_LIST_ROOM = "SELECT transfer.room_number FROM technics";
     public static final String SELECT_LIST_TECHNICS_PERSON = "SELECT technics.inventory_number, name FROM technics";
 
@@ -29,11 +29,12 @@ public class Constant {
     public static final String SET = " SET ";
 
     public static final String VALUES = "VALUES ";
-    public static final String VALUES_TECHNICS = "(inventory_number, name, date_of_purchase, price)";
+    public static final String VALUES_TECHNICS = "(inventory_number, name, date_of_purchase, price, model)";
     public static final String INVENTORY_NUMBER = "inventory_number";
     public static final String NAME = "name";
     public static final String DATE_OF_PURCHASE = "date_of_purchase";
     public static final String PRICE = "price";
+    public static final String MODEL = "model";
     public static final String VALUES_TRANSFER = "(transmission_date, full_name, room_number, inventory_number)";
     public static final String TRANSMISSION_DATE = "transmission_date";
     public static final String FULL_NAME = "full_name";

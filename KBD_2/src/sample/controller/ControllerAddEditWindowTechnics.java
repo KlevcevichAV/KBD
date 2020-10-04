@@ -52,6 +52,7 @@ public class ControllerAddEditWindowTechnics {
         monthField.setText(temp.getMonth() + "");
         yearField.setText(temp.getYear() + "");
         priceField.setText(temp.getPrice() + "");
+        modelField.setText(temp.getModel());
     }
 
     @FXML
@@ -68,7 +69,7 @@ public class ControllerAddEditWindowTechnics {
 
         decisionButton.setOnAction(event -> {
             result = true;
-            technics = new Technics(Integer.parseInt(inventoryNumberField.getText()), nameField.getText(), Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()));
+            technics = new Technics(Integer.parseInt(inventoryNumberField.getText()), nameField.getText(), Integer.parseInt(dayField.getText()), Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()), Double.parseDouble(priceField.getText()), modelField.getText());
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         });

@@ -124,7 +124,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(Constant.SELECT_TECHNICS);
             while (resultSet.next()) {
-                technics.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), Integer.parseInt(resultSet.getString(3)), Integer.parseInt(resultSet.getString(4)), Integer.parseInt(resultSet.getString(5)), Integer.parseInt(resultSet.getString(6))));
+                technics.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), Integer.parseInt(resultSet.getString(3)), Integer.parseInt(resultSet.getString(4)), Integer.parseInt(resultSet.getString(5)), Integer.parseInt(resultSet.getString(6)), resultSet.getString(7)));
             }
             System.out.println("We're created Technics.");
         }
@@ -184,7 +184,8 @@ public class DataBase {
                     added.getInventoryNumber() + Constant.COMMA +
                     addAp(added.getName()) + Constant.COMMA +
                     addAp(Constant.intToDate(added.getDay(), added.getMonth(), added.getYear())) + Constant.COMMA +
-                    added.getPrice() + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+                    added.getPrice() + Constant.COMMA +
+                    added.getModel() + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
             statement.executeUpdate(eq);
             technics.add(added);
             System.out.println("We're added.");
@@ -293,7 +294,8 @@ public class DataBase {
                     Constant.INVENTORY_NUMBER + Constant.EQUAL + newTechnics.getInventoryNumber() + Constant.COMMA +
                     Constant.NAME + Constant.EQUAL + addAp(newTechnics.getName()) + Constant.COMMA +
                     Constant.DATE_OF_PURCHASE + Constant.EQUAL + addAp(Constant.intToDate(newTechnics.getDay(), newTechnics.getMonth(), newTechnics.getYear())) + Constant.COMMA +
-                    Constant.PRICE + Constant.EQUAL + newTechnics.getPrice() + whereTechnics(edited) + Constant.SEMICOLON
+                    Constant.PRICE + Constant.EQUAL + newTechnics.getPrice() + Constant.COMMA +
+                    Constant.MODEL + Constant.EQUAL + addAp(newTechnics.getModel()) + whereTechnics(edited) + Constant.SEMICOLON
             );
             for (int i = 0; i < subdivisions.size(); i++) {
                 if (technics.get(i) == edited) {
@@ -365,7 +367,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(eqSearchTechnicsSub(number, date));
             while (resultSet.next()) {
-                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0));
+                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0, resultSet.getString(3)));
             }
             System.out.println("We're created Technics.");
         }
@@ -395,7 +397,7 @@ public class DataBase {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(eqSearchTechnicPerson(date, fullName, position));
             while (resultSet.next()) {
-                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0));
+                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0, resultSet.getString(3)));
             }
 //            System.out.println("We're created Technics.");
         }

@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ControllerList">
    <top>
@@ -30,42 +29,36 @@
          </padding>
       </HBox>
    </bottom>
-   <right>
-      <VBox fx:id="changeButtonsBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-      </VBox>
-   </right>
    <center>
       <Group BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableTechnics" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableTechnics" prefHeight="200.0" prefWidth="590.0">
               <columns>
-                <TableColumn fx:id="inventoryNumber" prefWidth="75.0" text="Inventory number" />
-                <TableColumn fx:id="name" prefWidth="75.0" text="Name" />
-                  <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
-                  <TableColumn fx:id="price" prefWidth="75.0" text="Price" />
+                <TableColumn fx:id="inventoryNumber" prefWidth="138.0" text="Inventory number" />
+                <TableColumn fx:id="name" prefWidth="114.0" text="Name" />
+                  <TableColumn fx:id="date" prefWidth="110.0" text="Date" />
+                  <TableColumn fx:id="price" text="Price" />
+                  <TableColumn fx:id="modelColumn" prefWidth="147.0" text="Model" />
               </columns>
             </TableView>
-            <TableView fx:id="tableSubdivisions" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableSubdivisions" prefHeight="200.0" prefWidth="587.0">
                <columns>
                   <TableColumn fx:id="number" prefWidth="75.0" text="Number" />
-                  <TableColumn fx:id="fullName" prefWidth="75.0" text="Full name" />
-                  <TableColumn fx:id="shortName" prefWidth="75.0" text="Short name" />
+                  <TableColumn fx:id="fullName" prefWidth="249.0" text="Full name" />
+                  <TableColumn fx:id="shortName" prefWidth="262.0" text="Short name" />
                </columns>
             </TableView>
-            <TableView fx:id="tableStaff" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableStaff" prefHeight="200.0" prefWidth="587.0">
                <columns>
-                  <TableColumn fx:id="fullNameStaff" prefWidth="75.0" text="Full name" />
-                  <TableColumn fx:id="positionStaff" prefWidth="75.0" text="Position" />
-                  <TableColumn fx:id="subdivisionName" prefWidth="75.0" text="Subdivision" />
+                  <TableColumn fx:id="fullNameStaff" prefWidth="206.0" text="Full name" />
+                  <TableColumn fx:id="positionStaff" prefWidth="221.0" text="Position" />
+                  <TableColumn fx:id="subdivisionName" prefWidth="159.0" text="Subdivision" />
                </columns></TableView>
-            <TableView fx:id="tableTransfer" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableTransfer" prefHeight="200.0" prefWidth="585.0">
                <columns>
-                  <TableColumn fx:id="dateTransfer" prefWidth="75.0" text="Date" />
-                  <TableColumn fx:id="fullNameTransfer" prefWidth="75.0" text="Full name" />
-                  <TableColumn fx:id="roomNumberTransfer" prefWidth="75.0" text="Room number" />
+                  <TableColumn fx:id="dateTransfer" prefWidth="308.0" text="Date" />
+                  <TableColumn fx:id="fullNameTransfer" prefWidth="154.0" text="Full name" />
+                  <TableColumn fx:id="roomNumberTransfer" prefWidth="122.0" text="Room number" />
                </columns></TableView>
          </children>
       </Group>
