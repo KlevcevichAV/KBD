@@ -1,7 +1,6 @@
 package sample.database;
 //start debug :)(
 
-import javax.naming.CompositeName;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +26,13 @@ public class DataBase {
         String result = Constant.SELECT_LIST_LIST_ROOM + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
                 Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
                 whereRoomNumber(number) + Constant.SEMICOLON;
+        return result;
+    }
+
+    public String eqSearchTechnicPerson(String date, String fullName, String position) {
+        String result = Constant.SELECT_LIST_TECHNICS_PERSON + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
+                Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
+                whereTechnicPerson(date, fullName, position) + Constant.SEMICOLON;
         return result;
     }
 
@@ -90,6 +96,15 @@ public class DataBase {
     private String whereRoomNumber(int numberSub) {
         String result = Constant.WHERE +
                 Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub;
+        return result;
+    }
+
+    private String whereTechnicPerson(String date, String fullName, String position) {
+        String result = Constant.WHERE +
+                Constant.DATE_TRANSFER + Constant.EQUAL + addAp(date) + Constant.AND +
+                Constant.FULL_NAME_STAFF + Constant.EQUAL + addAp(fullName) + Constant.AND +
+                Constant.POSITION_STAFF + Constant.EQUAL + addAp(position);
+                ;
         return result;
     }
 
@@ -368,6 +383,21 @@ public class DataBase {
                 result.add(new Transfer(0, 0, 0, "0", Integer.parseInt(resultSet.getString(1)), 0));
             }
             System.out.println("We're created Technics.");
+        }
+        return result;
+    }
+
+    public List<Technics> searchTechnicPerson(String date, String fullName, String position) throws ClassNotFoundException, SQLException {
+        ArrayList<Technics> result = new ArrayList<>();
+        Class.forName("com.mysql.jdbc.Driver");
+        settingProperties();
+        Connection connection = DriverManager.getConnection(url, p);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(eqSearchTechnicPerson(date, fullName, position));
+            while (resultSet.next()) {
+                result.add(new Technics(Integer.parseInt(resultSet.getString(1)), resultSet.getString(2), 0, 0, 0, 0));
+            }
+//            System.out.println("We're created Technics.");
         }
         return result;
     }

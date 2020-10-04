@@ -12,6 +12,7 @@ public class Constant {
     public static final String SELECT_STAFF = "SELECT * FROM staff";
     public static final String SELECT_LIST_TECHNICS_SUBDIVISION = "SELECT technics.inventory_number, technics.name FROM technics";
     public static final String SELECT_LIST_LIST_ROOM = "SELECT transfer.room_number FROM technics";
+    public static final String SELECT_LIST_TECHNICS_PERSON = "SELECT technics.inventory_number, name FROM technics";
 
     public static final String LEFT_JOIN = "LEFT JOIN ";
     public static final String ON = " ON ";
@@ -50,6 +51,8 @@ public class Constant {
     public static final String TRANSFER_FN = "transfer.full_name";
     public static final String FN_SUBDIVISION = "subdivision.full_name";
     public static final String SUBDIVISION_NAME_STAFF = "staff.subdivision_name";
+    public static final String FULL_NAME_STAFF = "staff.full_name";
+    public static final String POSITION_STAFF = "staff.position";
     public static final String DATE_TRANSFER = "transfer.transmission_date";
     public static final String FN_STAFF = "staff.full_name";
 
