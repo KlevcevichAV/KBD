@@ -41,7 +41,10 @@ public class ControllerAddEditWindowSubdivision {
     @FXML
     void initialize() {
         if (ControllerList.subdivision != null) {
+            decisionButton.setText("Редактировать");
             setTextInField();
+        }else {
+            decisionButton.setText("Добавить");
         }
 
         cancelButton.setOnAction(event -> {

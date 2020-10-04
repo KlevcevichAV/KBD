@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.database.Technics;
 import sample.database.Transfer;
 
 public class ControllerAddEditWindowTransfer {
@@ -53,7 +52,10 @@ public class ControllerAddEditWindowTransfer {
     @FXML
     void initialize() {
         if (ControllerList.transfer != null) {
+            decisionButton.setText("Редактировать");
             setTextInField();
+        }else {
+            decisionButton.setText("Добавить");
         }
 
         cancelButton.setOnAction(event -> {

@@ -58,7 +58,10 @@ public class ControllerAddEditWindowTechnics {
     @FXML
     void initialize() {
         if (ControllerList.technics != null) {
+            decisionButton.setText("Редактировать");
             setTextInField();
+        }else {
+            decisionButton.setText("Добавить");
         }
 
         cancelButton.setOnAction(event -> {

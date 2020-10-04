@@ -42,7 +42,10 @@ public class ControllerAddEditWindowStaff {
     @FXML
     void initialize() {
         if (ControllerList.staff != null) {
+            decisionButton.setText("Редактировать");
             setTextInField();
+        }else {
+            decisionButton.setText("Добавить");
         }
 
         cancelButton.setOnAction(event -> {

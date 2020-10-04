@@ -47,7 +47,7 @@
          <children>
             <Separator prefHeight="0.0" prefWidth="372.0" style="visibility: false;" />
             <Button fx:id="decisionButton" mnemonicParsing="false" text="Button" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Отмена" />
          </children>
          <padding>
             <Insets top="60.0" />

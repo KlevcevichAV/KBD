@@ -16,8 +16,8 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" text="Button" />
-            <Button fx:id="editButton" mnemonicParsing="false" text="РеДАКТИРОВАТЬ" />
+            <Button fx:id="addButton" mnemonicParsing="false" text="ДОБАВИТЬ" />
+            <Button fx:id="editButton" mnemonicParsing="false" text="РЕДАКТИРОВАТЬ" />
             <Button fx:id="deleteButton" mnemonicParsing="false" text="УДАЛИТЬ" />
             <Button fx:id="menuButton" mnemonicParsing="false" text="В МЕНЮ" />
          </children>
