@@ -12,7 +12,7 @@ public class Constant {
     public static final String SELECT_STAFF = "SELECT * FROM staff";
     public static final String SELECT_LIST_TECHNICS_SUBDIVISION = "SELECT technics.inventory_number, technics.name, technics.model FROM technics";
     public static final String SELECT_LIST_LIST_ROOM = "SELECT transfer.room_number FROM technics";
-    public static final String SELECT_LIST_TECHNICS_PERSON = "SELECT technics.inventory_number, name FROM technics";
+    public static final String SELECT_LIST_TECHNICS_PERSON = "SELECT technics.inventory_number, name, model FROM technics";
 
     public static final String LEFT_JOIN = "LEFT JOIN ";
     public static final String ON = " ON ";

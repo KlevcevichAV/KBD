@@ -85,6 +85,9 @@ public class ControllerList {
     private TableColumn<Transfer, Integer> roomNumberTransfer;
 
     @FXML
+    private TableColumn<Transfer, Integer> inventoryNumberTransfer;
+
+    @FXML
     private Button addButton;
 
     @FXML
@@ -139,6 +142,7 @@ public class ControllerList {
         dateTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, String>("date"));
         fullNameTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, String>("fullName"));
         roomNumberTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, Integer>("roomNumber"));
+        inventoryNumberTransfer.setCellValueFactory(new PropertyValueFactory<Transfer, Integer>("inventoryNumber"));
     }
 
     private void hideTables() {

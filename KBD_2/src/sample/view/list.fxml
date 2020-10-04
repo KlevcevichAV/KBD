@@ -56,9 +56,10 @@
                </columns></TableView>
             <TableView fx:id="tableTransfer" prefHeight="200.0" prefWidth="585.0">
                <columns>
-                  <TableColumn fx:id="dateTransfer" prefWidth="308.0" text="Date" />
-                  <TableColumn fx:id="fullNameTransfer" prefWidth="154.0" text="Full name" />
-                  <TableColumn fx:id="roomNumberTransfer" prefWidth="122.0" text="Room number" />
+                  <TableColumn fx:id="dateTransfer" prefWidth="84.0" text="Date" />
+                  <TableColumn fx:id="fullNameTransfer" prefWidth="124.0" text="Full name" />
+                  <TableColumn fx:id="roomNumberTransfer" prefWidth="143.0" text="Room number" />
+                  <TableColumn fx:id="inventoryNumberTransfer" prefWidth="308.0" text="Inventory number" />
                </columns></TableView>
          </children>
       </Group>

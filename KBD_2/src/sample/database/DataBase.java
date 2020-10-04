@@ -15,14 +15,14 @@ public class DataBase {
     private List<Subdivision> subdivisions;
     private List<Staff> staff;
 
-    public String eqSearchTechnicsSub(int number, String date) {
+    public String eqSearchTechnicsSub(String number, String date) {
         String result = Constant.SELECT_LIST_TECHNICS_SUBDIVISION + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
                 Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
                 whereTechnicsSubdivision(number, date) + Constant.SEMICOLON;
         return result;
     }
 
-    public String eqSearchNumberRoom(int number) {
+    public String eqSearchNumberRoom(String number) {
         String result = Constant.SELECT_LIST_LIST_ROOM + Constant.LEFT_JOIN_TECHNIC_TRANSFER +
                 Constant.LEFT_JOIN_TRANSFER_STAFF + Constant.LEFT_JOIN_SUBDIVISION_STAFF +
                 whereRoomNumber(number) + Constant.SEMICOLON;
@@ -86,16 +86,16 @@ public class DataBase {
         return result;
     }
 
-    private String whereTechnicsSubdivision(int numberSub, String date) {
+    private String whereTechnicsSubdivision(String numberSub, String date) {
         String result = Constant.WHERE +
-                Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub + Constant.AND +
+                Constant.FN_SUBDIVISION + Constant.EQUAL + addAp(numberSub) + Constant.AND +
                 Constant.DATE_TRANSFER + Constant.EQUAL + addAp(date);
         return result;
     }
 
-    private String whereRoomNumber(int numberSub) {
+    private String whereRoomNumber(String numberSub) {
         String result = Constant.WHERE +
-                Constant.FN_SUBDIVISION + Constant.EQUAL + numberSub;
+                Constant.FN_SUBDIVISION + Constant.EQUAL + addAp(numberSub);
         return result;
     }
 
@@ -185,7 +185,7 @@ public class DataBase {
                     addAp(added.getName()) + Constant.COMMA +
                     addAp(Constant.intToDate(added.getDay(), added.getMonth(), added.getYear())) + Constant.COMMA +
                     added.getPrice() + Constant.COMMA +
-                    added.getModel() + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
+                    addAp(added.getModel()) + Constant.RIGHT_BRACKET + Constant.SEMICOLON;
             statement.executeUpdate(eq);
             technics.add(added);
             System.out.println("We're added.");
@@ -359,7 +359,7 @@ public class DataBase {
         }
     }
 
-    public List<Technics> searchTechnicsSubdivision(int number, String date) throws SQLException, ClassNotFoundException {
+    public List<Technics> searchTechnicsSubdivision(String number, String date) throws SQLException, ClassNotFoundException {
         ArrayList<Technics> result = new ArrayList<>();
         Class.forName("com.mysql.jdbc.Driver");
         settingProperties();
@@ -374,7 +374,7 @@ public class DataBase {
         return result;
     }
 
-    public List<Transfer> searchNumberRoom(int number) throws SQLException, ClassNotFoundException {
+    public List<Transfer> searchNumberRoom(String number) throws SQLException, ClassNotFoundException {
         ArrayList<Transfer> result = new ArrayList<>();
         Class.forName("com.mysql.jdbc.Driver");
         settingProperties();

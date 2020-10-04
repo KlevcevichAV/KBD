@@ -56,7 +56,7 @@ public class ControllerSearchListTechnicPerson {
         table.setItems(test);
         inventoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Technics, Integer>("inventoryNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("name"));
-//        modelColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("date"));
+        modelColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("model"));
     }
 
     @FXML

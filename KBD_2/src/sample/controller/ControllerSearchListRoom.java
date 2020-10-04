@@ -34,7 +34,7 @@ public class ControllerSearchListRoom {
 
     private void createTable() throws SQLException, ClassNotFoundException {
         table.setVisible(true);
-        ObservableList<Transfer> test = FXCollections.observableArrayList(Controller.getDataBase().searchNumberRoom(Integer.parseInt(subdivisionField.getText())));
+        ObservableList<Transfer> test = FXCollections.observableArrayList(Controller.getDataBase().searchNumberRoom(subdivisionField.getText()));
         table.setItems(test);
         numberRoomColumn.setCellValueFactory(new PropertyValueFactory<Transfer, Integer>("roomNumber"));
     }

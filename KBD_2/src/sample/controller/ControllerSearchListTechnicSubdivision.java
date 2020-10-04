@@ -49,11 +49,11 @@ public class ControllerSearchListTechnicSubdivision {
     private void createTable() throws SQLException, ClassNotFoundException {
         table.setVisible(true);
         System.out.println(Controller.getDataBase().getSubdivisions().size());
-        ObservableList<Technics> test = FXCollections.observableArrayList(Controller.getDataBase().searchTechnicsSubdivision(Integer.parseInt(subdivisionField.getText()), Constant.intToDate(Integer.parseInt(dayField.getText()), Integer.parseInt(MonthField.getText()), Integer.parseInt(yearField.getText()))));
+        ObservableList<Technics> test = FXCollections.observableArrayList(Controller.getDataBase().searchTechnicsSubdivision(subdivisionField.getText(), Constant.intToDate(Integer.parseInt(dayField.getText()), Integer.parseInt(MonthField.getText()), Integer.parseInt(yearField.getText()))));
         table.setItems(test);
         inventoryNumberColumn.setCellValueFactory(new PropertyValueFactory<Technics, Integer>("inventoryNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("name"));
-//        modelColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("date"));
+        modelColumn.setCellValueFactory(new PropertyValueFactory<Technics, String>("model"));
     }
 
     @FXML
